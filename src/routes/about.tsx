@@ -63,9 +63,9 @@ function AboutPage() {
           </Reveal>
           <Reveal delay={0.05}>
             <p className="text-lg text-deep-waters/80">
-              Grafted was built from the ground up to serve what many existing
-              rooms cannot: genuine human connection, spiritual alignment, and
-              practical business growth in one place.
+              Grafted was built from the ground up to hold genuine human
+              connection, spiritual alignment, and practical business growth in
+              one place.
             </p>
           </Reveal>
         </div>
@@ -111,11 +111,9 @@ function AboutPage() {
           </Reveal>
           <Reveal delay={0.05}>
             <p className="text-lg text-deep-waters/80">
-              Grafted does not add God to a business meeting as a final
-              thought. The community is built from the conviction that God
-              cares about work, that the marketplace matters, and that beloved
-              identity changes the way people give, receive, sell, lead, and
-              serve.
+              Grafted is built from the conviction that God cares about work,
+              that the marketplace matters, and that beloved identity changes
+              the way people give, receive, sell, lead, and serve.
             </p>
             <div className="mt-8 rounded-2xl border border-refined-gold/40 bg-background p-6">
               <div className="font-eyebrow text-[10px] uppercase tracking-[0.28em] text-refined-gold">
@@ -137,8 +135,9 @@ function AboutPage() {
               The room is wide. The posture is specific.
             </SectionHeading>
             <p className="mt-6 text-deep-waters/75">
-              You do not need to have everything figured out to visit. You do
-              need to honour the posture of the room.
+              You can visit while you are still figuring things out. The room
+              asks every person to honour the posture, prayer, and faith-forward
+              nature of the community.
             </p>
           </Reveal>
           <Reveal delay={0.05}>
@@ -195,9 +194,9 @@ function AboutPage() {
           </Reveal>
           <Reveal delay={0.05}>
             <p className="mt-6 text-lg text-river-sand/80">
-              The long-term vision is not one oversized room. It is multiple
-              Grafted branches that carry the same culture, meeting flow,
-              tracking standards, and community depth.
+              The long-term vision is multiple Grafted branches that carry the
+              same culture, meeting flow, tracking standards, and community
+              depth.
             </p>
           </Reveal>
         </div>
