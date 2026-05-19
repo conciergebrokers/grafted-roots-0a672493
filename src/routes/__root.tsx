@@ -80,6 +80,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#0D3D3A" },
+      { property: "og:title", content: "Grafted | Faith-Integrated Business Networking in Edmonton" },
+      { name: "twitter:title", content: "Grafted | Faith-Integrated Business Networking in Edmonton" },
+      { name: "description", content: "Grafted is a faith-integrated business networking community in Edmonton for business owners seeking real referrals and practical growth." },
+      { property: "og:description", content: "Grafted is a faith-integrated business networking community in Edmonton for business owners seeking real referrals and practical growth." },
+      { name: "twitter:description", content: "Grafted is a faith-integrated business networking community in Edmonton for business owners seeking real referrals and practical growth." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b1ae15f5-c64e-48b0-84fc-e6a328937a3e/id-preview-ee6ab42a--67f7d448-aaf8-458b-a8ab-a2942359ac19.lovable.app-1779220022726.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b1ae15f5-c64e-48b0-84fc-e6a328937a3e/id-preview-ee6ab42a--67f7d448-aaf8-458b-a8ab-a2942359ac19.lovable.app-1779220022726.png" },
     ],
     links: [
       {
