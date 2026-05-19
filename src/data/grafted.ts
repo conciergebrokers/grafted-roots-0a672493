@@ -165,7 +165,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: "Do I have to be a Christian to visit?",
-    a: "People at every stage of faith are welcome. The faith in the room will be clear. Visitors and members are expected to honour the prayer, scripture, and faith-forward nature of the community.",
+    a: "No, you don't. Everyone's faith journey is their own, and we will respect that as much as you respect the room. The faith in the room will be clear, and visitors are asked to honour the prayer, scripture, and faith-forward nature of the community.",
   },
   {
     q: "What happens at a meeting?",
@@ -181,7 +181,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: "What does membership cost?",
-    a: "Membership is tiered by business size. Solo or home-based: $100 per month. 1 to 3 employees: $150 per month. 3 to 5 employees: $200 per month. 5 to 10 employees: $250 per month. 10 to 20 employees: $350 per month. 20 or more employees: $500 per month.",
+    a: "Membership is tiered by business size. Solo or home-based: $100 per month. 1 to 3 employees: $150 per month. 3 to 5 employees: $200 per month. 5 to 10 employees: $250 per month. 10 to 20 employees: $350 per month. 20 or more employees: $500 per month. Twenty percent of membership fees is set aside for charitable giving, with members voting on where those funds are directed.",
   },
   {
     q: "Are meals included?",
@@ -189,7 +189,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: "What if I cannot afford membership?",
-    a: "Financial hardship can be handled through a scholarship or waiver conversation.",
+    a: "We believe where we put our money is tied to where our heart is. Investing in yourself and your business growth is an important step in business. If there are extenuating circumstances, we are open to hearing about them.",
   },
   {
     q: "Are industries exclusive?",
