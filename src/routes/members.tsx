@@ -19,6 +19,7 @@ export const Route = createFileRoute("/members")({
       { property: "og:title", content: "Member Showcase | Grafted" },
       { property: "og:url", content: "/members" },
       { property: "og:type", content: "website" },
+      { name: "robots", content: "noindex" },
     ],
     links: [{ rel: "canonical", href: "/members" }],
   }),
