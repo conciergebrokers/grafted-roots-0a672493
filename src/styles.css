@@ -5,17 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Design system definition.
- *
- * The @theme inline block maps CSS custom properties to Tailwind utility
- * classes (e.g. --color-primary -> bg-primary, text-primary).
- *
- * The :root and .dark blocks define the actual color values using oklch.
- * All colors MUST use oklch format.
- *
- * To add a new semantic color:
- * 1. Add the variable to :root (light value) and .dark (dark value)
- * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ * Grafted design system.
+ * Brand palette stored as oklch tokens. Semantic shadcn tokens map to brand.
  */
 
 @theme inline {
@@ -59,42 +50,68 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-deep-waters: var(--deep-waters);
+  --color-still-pool: var(--still-pool);
+  --color-living-water: var(--living-water);
+  --color-refined-gold: var(--refined-gold);
+  --color-sunrise-copper: var(--sunrise-copper);
+  --color-river-sand: var(--river-sand);
+  --color-river-pale: var(--river-pale);
+  --color-charcoal-teal: var(--charcoal-teal);
+  --color-deepest: var(--deepest);
+  --font-display: "DM Serif Display", ui-serif, Georgia, serif;
+  --font-serif: "Source Serif 4", ui-serif, Georgia, serif;
+  --font-eyebrow: "Raleway", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Nunito Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Nunito Sans", ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
-  --radius: 0.625rem;
+  --radius: 0.5rem;
+
+  /* Grafted brand palette (oklch approximations of brand hex) */
+  --deep-waters: oklch(0.34 0.045 184);       /* #0D3D3A */
+  --still-pool: oklch(0.41 0.052 184);        /* #155552 */
+  --living-water: oklch(0.48 0.060 184);      /* #1B6E69 */
+  --refined-gold: oklch(0.66 0.131 71);       /* #C4882A */
+  --sunrise-copper: oklch(0.74 0.130 75);     /* #D4A044 */
+  --river-sand: oklch(0.965 0.014 88);        /* #F7F3EA */
+  --river-pale: oklch(0.972 0.012 186);       /* #EEF7F6 */
+  --charcoal-teal: oklch(0.37 0.045 184);     /* #1A4A47 */
+  --deepest: oklch(0.24 0.038 184);           /* #081E1C */
+
   --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
+  --foreground: var(--deep-waters);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
+  --card-foreground: var(--deep-waters);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
+  --popover-foreground: var(--deep-waters);
+  --primary: var(--deep-waters);
+  --primary-foreground: var(--river-sand);
+  --secondary: var(--river-pale);
+  --secondary-foreground: var(--deep-waters);
+  --muted: var(--river-sand);
+  --muted-foreground: oklch(0.45 0.025 184);
+  --accent: var(--refined-gold);
+  --accent-foreground: var(--deepest);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
+  --border: oklch(0.90 0.012 184);
+  --input: oklch(0.90 0.012 184);
+  --ring: var(--living-water);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.968 0.007 247.896);
-  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-  --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
+  --sidebar: var(--river-sand);
+  --sidebar-foreground: var(--deep-waters);
+  --sidebar-primary: var(--deep-waters);
+  --sidebar-primary-foreground: var(--river-sand);
+  --sidebar-accent: var(--river-pale);
+  --sidebar-accent-foreground: var(--deep-waters);
+  --sidebar-border: oklch(0.90 0.012 184);
+  --sidebar-ring: var(--living-water);
 }
 
 .dark {
@@ -140,5 +157,17 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-serif);
+    letter-spacing: -0.01em;
   }
 }
