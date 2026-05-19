@@ -52,7 +52,6 @@ export function SiteFooter() {
           </div>
           <ul className="mt-3 space-y-2 text-sm text-river-sand/60">
             <li><Link to="/portal" className="hover:text-refined-gold">Member Portal</Link></li>
-            <li><Link to="/members" className="hover:text-refined-gold">Member Showcase</Link></li>
           </ul>
         </div>
       </div>
