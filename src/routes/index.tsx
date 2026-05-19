@@ -150,10 +150,10 @@ function HomePage() {
             </p>
           </Reveal>
         </div>
-        <div className="mt-14 grid gap-4 md:grid-cols-3">
+        <div className="mt-14 grid items-stretch gap-4 md:grid-cols-3">
           {CONNECTION_POINTS.map((c, i) => (
-            <Reveal key={c.title} delay={i * 0.05}>
-              <div className="rounded-2xl border border-border bg-river-pale p-7">
+            <Reveal key={c.title} delay={i * 0.05} className="h-full">
+              <div className="flex h-full min-h-[160px] flex-col rounded-2xl border border-border bg-river-pale p-7 md:min-h-[190px]">
                 <div className="font-eyebrow text-[10px] uppercase tracking-[0.22em] text-deep-waters/50">
                   {c.title}
                 </div>
@@ -177,7 +177,7 @@ function HomePage() {
           </Reveal>
           <Reveal delay={0.05}>
             <p className="mt-6 text-lg text-deep-waters/80">
-              Every Grafted meeting follows a branded flow. It is structured
+              Every Grafted meeting follows a specific flow. It is structured
               enough to be repeatable and personal enough to feel human.
             </p>
           </Reveal>
@@ -266,8 +266,11 @@ function HomePage() {
                 Members pay for their own lunch at each meeting.
               </p>
               <p>
-                Financial hardship can be handled through a scholarship or
-                waiver conversation.
+                Twenty percent of membership fees is set aside for charitable
+                giving, with members voting on where those funds are directed.
+              </p>
+              <p>
+                Extenuating circumstances can be handled through a conversation.
               </p>
             </div>
           </Reveal>
