@@ -30,16 +30,22 @@ export const PILLARS = [
   },
   {
     title: "I Am Not Alone",
-    body: "Deep community where people are known, not just networked.",
+    body: "Deep community where people are known, supported, and connected.",
   },
 ];
 
-export const CONTRAST_POINTS = [
-  { less: "Less performance pressure", more: "More real relationship" },
-  { less: "Less transactional networking", more: "More generous exchange" },
+export const CONNECTION_POINTS = [
   {
-    less: "Less faith compartmentalized away from business",
-    more: "More whole-person growth",
+    title: "Real relationship",
+    body: "People learn each other's businesses, lives, needs, and capacity before referrals begin to move.",
+  },
+  {
+    title: "Generous exchange",
+    body: "Members give, receive, celebrate, and follow through with open hands.",
+  },
+  {
+    title: "Whole-person growth",
+    body: "Business development, spiritual alignment, and honest community belong in the same room.",
   },
 ];
 
@@ -115,12 +121,12 @@ export const AUDIENCE_CARDS = [
 ];
 
 export const DIFFERENTIATORS = [
-  "Relationship before scorekeeping",
-  "Referrals celebrated without pressure",
+  "Relationship with accountability",
+  "Referrals celebrated with generosity",
   "Faith integrated openly",
-  "Inclusive of business size and stage",
-  "Selling welcomed without manipulation",
-  "Prayer treated as practice, not decoration",
+  "Room for every business size and stage",
+  "Selling welcomed with honour",
+  "Prayer practiced with care",
 ];
 
 export const MEMBER_POSTURE = [
@@ -155,11 +161,11 @@ export const FAQ_ITEMS = [
   },
   {
     q: "Is Grafted a church program?",
-    a: "No. Grafted is a business networking community with faith fully present in the room. It is not owned by one church and it is not a church ministry.",
+    a: "Grafted is an independent business networking community with faith fully present in the room. It serves business owners across churches, industries, and stages of growth.",
   },
   {
     q: "Do I have to be a Christian to visit?",
-    a: "No. People who are not yet believers are welcome. The faith in the room will be clear. Visitors and members are expected to honour the prayer, scripture, and faith-forward nature of the community.",
+    a: "People at every stage of faith are welcome. The faith in the room will be clear. Visitors and members are expected to honour the prayer, scripture, and faith-forward nature of the community.",
   },
   {
     q: "What happens at a meeting?",
@@ -171,7 +177,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: "Can I visit before joining?",
-    a: "Yes. Visitors may attend up to three times before making a membership decision. There is no visitor fee for the first three visits. Visitors pay for their own meal.",
+    a: "Yes. Visitors may attend up to three times before making a membership decision. The first three visits are free. Visitors pay for their own meal.",
   },
   {
     q: "What does membership cost?",
@@ -179,19 +185,19 @@ export const FAQ_ITEMS = [
   },
   {
     q: "Are meals included?",
-    a: "No. Members and visitors pay for their own meal at each meeting.",
+    a: "Members and visitors pay for their own meal at each meeting.",
   },
   {
     q: "What if I cannot afford membership?",
-    a: "No one is turned away for financial hardship. A scholarship or waiver conversation is available.",
+    a: "Financial hardship can be handled through a scholarship or waiver conversation.",
   },
   {
     q: "Are industries exclusive?",
-    a: "No. Grafted does not operate with strict seat exclusivity. The community is relationship-first and inclusive of business owners across industries.",
+    a: "Grafted welcomes business owners across industries. The room is relationship-first and inclusive of business owners across business sizes and stages.",
   },
   {
     q: "Are MLM businesses allowed?",
-    a: "The membership team considers these situations case by case. The key question is posture. A business owner whose primary intention is recruiting members into a team structure is not aligned with the room.",
+    a: "The membership team considers these situations case by case. The key question is posture. A business owner whose primary intention is recruiting members into a team structure creates a mismatch with the room.",
   },
   {
     q: "What are slips?",
