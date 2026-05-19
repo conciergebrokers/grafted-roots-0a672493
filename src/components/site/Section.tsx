@@ -19,7 +19,7 @@ export function Section({
     dark: "bg-deep-waters text-river-sand",
   }[tone];
   return (
-    <section id={id} className={cn("py-20 md:py-28", toneClass, className)}>
+    <section id={id} className={cn("py-12 md:py-16 lg:py-20", toneClass, className)}>
       <div className="mx-auto max-w-6xl px-5 md:px-8">{children}</div>
     </section>
   );
