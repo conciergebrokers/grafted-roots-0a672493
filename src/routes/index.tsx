@@ -150,10 +150,10 @@ function HomePage() {
             </p>
           </Reveal>
         </div>
-        <div className="mt-14 grid items-stretch gap-4 md:grid-cols-3">
+        <div className="mt-14 grid items-stretch gap-4 md:grid-cols-3 md:auto-rows-fr">
           {CONNECTION_POINTS.map((c, i) => (
             <Reveal key={c.title} delay={i * 0.05} className="h-full">
-              <div className="flex h-full min-h-[160px] flex-col rounded-2xl border border-border bg-river-pale p-7 md:min-h-[190px]">
+              <div className="flex h-full min-h-[170px] flex-col rounded-2xl border border-border bg-river-pale p-7 md:h-[190px] md:min-h-0 lg:h-[205px]">
                 <div className="font-eyebrow text-[10px] uppercase tracking-[0.22em] text-deep-waters/50">
                   {c.title}
                 </div>
