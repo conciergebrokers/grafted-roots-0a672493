@@ -22,7 +22,7 @@ import { PricingTierCard } from "@/components/site/PricingTierCard";
 import { CTASection } from "@/components/site/CTASection";
 import { Reveal } from "@/components/site/Reveal";
 import {
-  CONTRAST_POINTS,
+  CONNECTION_POINTS,
   MEETING_INFO,
   MEETING_SEGMENTS,
   PILLARS,
@@ -114,8 +114,8 @@ function HomePage() {
               Grafted brings business owners into one room for practical
               business growth, genuine relationship, and Spirit-led
               encouragement. Selling is welcome. Referrals are celebrated.
-              Prayer is part of the room. The goal is not pressure. The goal is
-              a community where people actually want each other to win.
+              Prayer is part of the room. Members grow through a community
+              where people actually want each other to win.
             </p>
           </Reveal>
         </div>
@@ -137,30 +137,29 @@ function HomePage() {
         <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
           <Reveal>
             <SectionHeading eyebrow="Why This Exists" number="02">
-              Business ownership can be lonely. It does not have to stay that
-              way.
+              Business ownership can be lonely. Community changes what people
+              can carry.
             </SectionHeading>
           </Reveal>
           <Reveal delay={0.05}>
             <p className="text-lg text-deep-waters/80">
-              Edmonton has business networking options, but very few spaces
-              where faith-driven business owners can show up as their whole
-              selves. Grafted exists for the owner who wants to grow their
-              business, give generously, receive support, and bring God into
-              the way they build.
+              Edmonton has business owners who are hungry for a room where they
+              can show up as their whole selves. Grafted exists for the owner
+              who wants to grow their business, give generously, receive
+              support, and bring God into the way they build.
             </p>
           </Reveal>
         </div>
         <div className="mt-14 grid gap-4 md:grid-cols-3">
-          {CONTRAST_POINTS.map((c, i) => (
-            <Reveal key={c.less} delay={i * 0.05}>
+          {CONNECTION_POINTS.map((c, i) => (
+            <Reveal key={c.title} delay={i * 0.05}>
               <div className="rounded-2xl border border-border bg-river-pale p-7">
                 <div className="font-eyebrow text-[10px] uppercase tracking-[0.22em] text-deep-waters/50">
-                  {c.less}
+                  {c.title}
                 </div>
-                <div className="mt-3 flex items-center gap-2 font-serif text-xl text-deep-waters">
-                  <ArrowRight className="h-4 w-4 text-refined-gold" strokeWidth={1.5} />
-                  {c.more}
+                <div className="mt-3 flex items-start gap-2 text-deep-waters/80">
+                  <ArrowRight className="mt-1 h-4 w-4 flex-shrink-0 text-refined-gold" strokeWidth={1.5} />
+                  <p>{c.body}</p>
                 </div>
               </div>
             </Reveal>
@@ -210,8 +209,8 @@ function HomePage() {
             </SectionHeading>
             <p className="mt-6 text-lg text-river-sand/80">
               Visitors may attend up to three times before making a membership
-              decision. There is no visitor fee for the first three meetings.
-              Visitors pay for their own meal.
+              decision. The first three meetings are free to visit. Visitors pay
+              for their own meal.
             </p>
             <Button
               asChild
@@ -229,7 +228,7 @@ function HomePage() {
               <ul className="mt-5 space-y-3 text-river-sand/85">
                 <li className="flex items-start gap-3">
                   <Users className="mt-1 h-4 w-4 text-refined-gold" strokeWidth={1.5} />
-                  Conversation over performance
+                  Conversation with depth
                 </li>
                 <li className="flex items-start gap-3">
                   <Hammer className="mt-1 h-4 w-4 text-refined-gold" strokeWidth={1.5} />
@@ -237,7 +236,7 @@ function HomePage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <Repeat className="mt-1 h-4 w-4 text-refined-gold" strokeWidth={1.5} />
-                  Referrals celebrated without pressure
+                  Referrals celebrated with generosity
                 </li>
                 <li className="flex items-start gap-3">
                   <HeartHandshake className="mt-1 h-4 w-4 text-refined-gold" strokeWidth={1.5} />
@@ -259,17 +258,16 @@ function HomePage() {
             <p className="mt-6 text-lg text-deep-waters/80">
               Grafted is built to welcome business owners at different stages.
               Membership fees are tiered by business size so solo entrepreneurs
-              are not priced out and larger businesses can help carry the
+              can enter accessibly and larger businesses can help carry the
               community.
             </p>
             <div className="mt-8 space-y-2 text-sm text-deep-waters/70">
               <p>
-                Meals are not included. Members pay for their own lunch at each
-                meeting.
+                Members pay for their own lunch at each meeting.
               </p>
               <p>
-                No one is turned away for financial hardship. A scholarship or
-                waiver conversation is available where needed.
+                Financial hardship can be handled through a scholarship or
+                waiver conversation.
               </p>
             </div>
           </Reveal>
@@ -299,8 +297,9 @@ function HomePage() {
           <Reveal delay={0.05}>
             <p className="mt-6 text-lg text-deep-waters/80">
               Grafted tracks referrals, closed business, Forge Meetings, growth
-              activity, prayer requests, and answered prayer. The goal is not
-              pressure. The goal is testimony.
+              activity, prayer requests, and answered prayer. The numbers help
+              the community celebrate the testimony of what God is building
+              through the room.
             </p>
           </Reveal>
         </div>
