@@ -15,7 +15,7 @@ export const MEETING_INFO = {
   province: "Alberta",
   launch: "Launching June 2026",
   founder: "Jen Garrison",
-  email: "jen@graftedexchange.ca",
+  email: "info@graftedexchange.ca",
   domain: "graftedexchange.ca",
 };
 
