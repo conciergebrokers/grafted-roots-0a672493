@@ -109,7 +109,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@type": "Organization",
           name: "Grafted",
           url: "https://graftedexchange.ca",
-          email: "jen@graftedexchange.ca",
+          email: "info@graftedexchange.ca",
           founder: { "@type": "Person", name: "Jen Garrison" },
           address: {
             "@type": "PostalAddress",
