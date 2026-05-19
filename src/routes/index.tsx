@@ -150,19 +150,21 @@ function HomePage() {
             </p>
           </Reveal>
         </div>
-        <div className="mt-14 grid items-stretch gap-4 md:grid-cols-3 md:auto-rows-fr">
+        <div className="mt-14 connection-card-grid">
           {CONNECTION_POINTS.map((c, i) => (
-            <Reveal key={c.title} delay={i * 0.05} className="h-full">
-              <div className="flex h-full min-h-[170px] flex-col rounded-2xl border border-border bg-river-pale p-7 md:h-[190px] md:min-h-0 lg:h-[205px]">
-                <div className="font-eyebrow text-[10px] uppercase tracking-[0.22em] text-deep-waters/50">
-                  {c.title}
+            <div key={c.title} className="connection-card-item">
+              <Reveal delay={i * 0.05} className="connection-card-reveal">
+                <div className="connection-card">
+                  <div className="font-eyebrow text-[10px] uppercase tracking-[0.22em] text-deep-waters/50">
+                    {c.title}
+                  </div>
+                  <div className="mt-3 flex items-start gap-2 text-deep-waters/80">
+                    <ArrowRight className="mt-1 h-4 w-4 flex-shrink-0 text-refined-gold" strokeWidth={1.5} />
+                    <p>{c.body}</p>
+                  </div>
                 </div>
-                <div className="mt-3 flex items-start gap-2 text-deep-waters/80">
-                  <ArrowRight className="mt-1 h-4 w-4 flex-shrink-0 text-refined-gold" strokeWidth={1.5} />
-                  <p>{c.body}</p>
-                </div>
-              </div>
-            </Reveal>
+              </Reveal>
+            </div>
           ))}
         </div>
       </Section>
