@@ -25,7 +25,7 @@ export function CTASection({
             "radial-gradient(50% 60% at 50% 0%, var(--still-pool) 0%, transparent 70%)",
         }}
       />
-      <div className="relative mx-auto max-w-4xl px-5 py-20 text-center md:px-8 md:py-24">
+      <div className="relative mx-auto max-w-4xl px-5 py-14 text-center md:px-8 md:py-16 lg:py-20">
         {eyebrow && (
           <div className="font-eyebrow text-xs uppercase tracking-[0.24em] text-refined-gold">
             {eyebrow}
@@ -37,7 +37,7 @@ export function CTASection({
         {body && (
           <p className="mx-auto mt-5 max-w-2xl text-river-sand/80">{body}</p>
         )}
-        <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Button
             asChild
             size="lg"
