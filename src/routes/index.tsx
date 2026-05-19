@@ -150,11 +150,14 @@ function HomePage() {
             </p>
           </Reveal>
         </div>
-        <div className="mt-14 connection-card-grid">
+        <div className="mt-14 grid gap-4 md:grid-cols-3" style={{ alignItems: "stretch" }}>
           {CONNECTION_POINTS.map((c, i) => (
-            <div key={c.title} className="connection-card-item">
-              <Reveal delay={i * 0.05} className="connection-card-reveal">
-                <div className="connection-card">
+            <div key={c.title} style={{ height: "100%" }}>
+              <Reveal delay={i * 0.05} className="h-full">
+                <div
+                  className="flex h-full flex-col rounded-2xl border border-border bg-river-pale p-7"
+                  style={{ minHeight: "230px" }}
+                >
                   <div className="font-eyebrow text-[10px] uppercase tracking-[0.22em] text-deep-waters/50">
                     {c.title}
                   </div>
