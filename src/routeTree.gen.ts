@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as PortalRouteImport } from './routes/portal'
 import { Route as MembersRouteImport } from './routes/members'
 import { Route as FaqRouteImport } from './routes/faq'
@@ -20,6 +21,11 @@ import { Route as ProtectedAdminRouteImport } from './routes/_protected/admin'
 import { Route as ProtectedBranchesBranchIdRouteImport } from './routes/_protected/branches.$branchId'
 import { Route as ProtectedAdminAnalyticsRouteImport } from './routes/_protected/admin.analytics'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PortalRoute = PortalRouteImport.update({
   id: '/portal',
   path: '/portal',
@@ -78,6 +84,7 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/members': typeof MembersRoute
   '/portal': typeof PortalRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof ProtectedAdminRouteWithChildren
   '/admin/analytics': typeof ProtectedAdminAnalyticsRoute
   '/branches/$branchId': typeof ProtectedBranchesBranchIdRoute
@@ -89,6 +96,7 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/members': typeof MembersRoute
   '/portal': typeof PortalRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof ProtectedAdminRouteWithChildren
   '/admin/analytics': typeof ProtectedAdminAnalyticsRoute
   '/branches/$branchId': typeof ProtectedBranchesBranchIdRoute
@@ -102,6 +110,7 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/members': typeof MembersRoute
   '/portal': typeof PortalRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_protected/admin': typeof ProtectedAdminRouteWithChildren
   '/_protected/admin/analytics': typeof ProtectedAdminAnalyticsRoute
   '/_protected/branches/$branchId': typeof ProtectedBranchesBranchIdRoute
@@ -115,6 +124,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/members'
     | '/portal'
+    | '/sitemap.xml'
     | '/admin'
     | '/admin/analytics'
     | '/branches/$branchId'
@@ -126,6 +136,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/members'
     | '/portal'
+    | '/sitemap.xml'
     | '/admin'
     | '/admin/analytics'
     | '/branches/$branchId'
@@ -138,6 +149,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/members'
     | '/portal'
+    | '/sitemap.xml'
     | '/_protected/admin'
     | '/_protected/admin/analytics'
     | '/_protected/branches/$branchId'
@@ -151,10 +163,18 @@ export interface RootRouteChildren {
   FaqRoute: typeof FaqRoute
   MembersRoute: typeof MembersRoute
   PortalRoute: typeof PortalRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/portal': {
       id: '/portal'
       path: '/portal'
@@ -262,7 +282,18 @@ const rootRouteChildren: RootRouteChildren = {
   FaqRoute: FaqRoute,
   MembersRoute: MembersRoute,
   PortalRoute: PortalRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

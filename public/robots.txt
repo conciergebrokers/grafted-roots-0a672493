@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Disallow: /portal
+Disallow: /members
+Disallow: /admin
+Disallow: /branches/
