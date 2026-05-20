@@ -59,45 +59,49 @@ function HomePage() {
   return (
     <>
       <PageHero
-        eyebrow="Known. Rooted. Sent."
-        title={
-          <>
-            A business community where faith is
-            welcome in the room.
-          </>
-        }
-        subtitle="Grafted is a faith-integrated business networking community in Edmonton for business owners who want real referrals, honest growth, and relationships that hold."
+        eyebrow="Brand Guide"
+        align="center"
+        title="Grafted"
+        subtitle="A community of faith-first, business-forward people."
       >
-        <div className="flex flex-col gap-3 sm:flex-row">
-          <Button
-            asChild
-            size="lg"
-            className="bg-refined-gold text-deepest hover:bg-sunrise-copper font-eyebrow text-xs uppercase tracking-[0.2em]"
-          >
-            <Link to="/contact">Visit Grafted</Link>
-          </Button>
-          <Button
-            asChild
-            size="lg"
-            variant="outline"
-            className="border-river-sand/30 bg-transparent text-river-sand hover:bg-river-sand/10 hover:text-river-sand font-eyebrow text-xs uppercase tracking-[0.2em]"
-          >
-            <a href="#how-it-works">Learn How It Works</a>
-          </Button>
-        </div>
-        <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-river-sand/80">
-          <span className="inline-flex items-center gap-2">
-            <Calendar className="h-4 w-4 text-refined-gold" strokeWidth={1.5} />
-            Weekly {MEETING_INFO.day} at {MEETING_INFO.time}
-          </span>
-          <span className="inline-flex items-center gap-2">
-            <MapPin className="h-4 w-4 text-refined-gold" strokeWidth={1.5} />
-            {MEETING_INFO.city}, {MEETING_INFO.province}
-          </span>
-          <span className="inline-flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-refined-gold" strokeWidth={1.5} />
-            {MEETING_INFO.launch}
-          </span>
+        <div className="mx-auto max-w-3xl">
+          <div className="font-eyebrow text-sm uppercase tracking-[0.58em] text-refined-gold md:text-base">
+            Known <span className="mx-4 text-river-sand/35">·</span> Rooted <span className="mx-4 text-river-sand/35">·</span> Sent
+          </div>
+          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <Button
+              asChild
+              size="lg"
+              className="bg-refined-gold text-deepest hover:bg-sunrise-copper font-eyebrow text-xs uppercase tracking-[0.2em]"
+            >
+              <Link to="/contact">Visit Grafted</Link>
+            </Button>
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="border-river-sand/30 bg-transparent text-river-sand hover:bg-river-sand/10 hover:text-river-sand font-eyebrow text-xs uppercase tracking-[0.2em]"
+            >
+              <a href="#how-it-works">Learn How It Works</a>
+            </Button>
+          </div>
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-river-sand/70">
+            <span className="inline-flex items-center gap-2">
+              <Calendar className="h-4 w-4 text-refined-gold" strokeWidth={1.5} />
+              Weekly {MEETING_INFO.day} at {MEETING_INFO.time}
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <MapPin className="h-4 w-4 text-refined-gold" strokeWidth={1.5} />
+              {MEETING_INFO.city}, {MEETING_INFO.province}
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-refined-gold" strokeWidth={1.5} />
+              {MEETING_INFO.launch}
+            </span>
+          </div>
+          <p className="mx-auto mt-12 max-w-2xl font-serif text-lg italic leading-relaxed text-river-sand/58">
+            A business community where faith is welcome in the room, referrals are celebrated, and relationships have room to hold.
+          </p>
         </div>
       </PageHero>
 
@@ -284,7 +288,7 @@ function HomePage() {
               {PRICING_TIERS.map((t, i) => (
                 <PricingTierCard
                   key={t.label}
-                  label={t.label}
+                  label={t.price}
                   price={t.price}
                   highlight={i === 0}
                 />
