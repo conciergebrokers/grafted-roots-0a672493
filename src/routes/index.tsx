@@ -288,7 +288,7 @@ function HomePage() {
               {PRICING_TIERS.map((t, i) => (
                 <PricingTierCard
                   key={t.label}
-                  label={t.price}
+                  label={t.label}
                   price={t.price}
                   highlight={i === 0}
                 />
