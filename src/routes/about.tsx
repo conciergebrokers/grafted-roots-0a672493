@@ -200,19 +200,27 @@ function AboutPage() {
             </p>
           </Reveal>
         </div>
-        <div className="mt-14 grid gap-5 md:grid-cols-3">
+        <div
+          className="mt-14 grid gap-5 md:grid-cols-3"
+          style={{ alignItems: "stretch" }}
+        >
           {BRANCH_PHASES.map((p, i) => (
-            <Reveal key={p.phase} delay={i * 0.06}>
-              <div className="rounded-2xl border border-river-sand/15 bg-charcoal-teal/40 p-7">
-                <div className="font-eyebrow text-[10px] uppercase tracking-[0.28em] text-refined-gold">
-                  Phase {i + 1}
+            <div key={p.phase} style={{ height: "100%" }}>
+              <Reveal delay={i * 0.06} className="h-full">
+                <div
+                  className="flex h-full flex-col rounded-2xl border border-river-sand/15 bg-charcoal-teal/40 p-7"
+                  style={{ minHeight: "178px" }}
+                >
+                  <div className="font-eyebrow text-[10px] uppercase tracking-[0.28em] text-refined-gold">
+                    Phase {i + 1}
+                  </div>
+                  <h3 className="mt-3 font-serif text-2xl text-river-sand">
+                    {p.phase.replace(/^Phase \d+:\s*/, "")}
+                  </h3>
+                  <p className="mt-3 text-river-sand/75">{p.body}</p>
                 </div>
-                <h3 className="mt-3 font-serif text-2xl text-river-sand">
-                  {p.phase.replace(/^Phase \d+:\s*/, "")}
-                </h3>
-                <p className="mt-3 text-river-sand/75">{p.body}</p>
-              </div>
-            </Reveal>
+              </Reveal>
+            </div>
           ))}
         </div>
       </Section>
