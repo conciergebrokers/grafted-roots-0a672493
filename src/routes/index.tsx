@@ -59,7 +59,6 @@ function HomePage() {
   return (
     <>
       <PageHero
-        eyebrow="Brand Guide"
         align="center"
         title="Grafted"
         subtitle="A community of faith-first, business-forward people."
@@ -99,9 +98,6 @@ function HomePage() {
               {MEETING_INFO.launch}
             </span>
           </div>
-          <p className="mx-auto mt-12 max-w-2xl font-serif text-lg italic leading-relaxed text-river-sand/58">
-            A business community where faith is welcome in the room, referrals are celebrated, and relationships have room to hold.
-          </p>
         </div>
       </PageHero>
 
