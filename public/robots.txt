@@ -5,3 +5,5 @@ Disallow: /portal
 Disallow: /members
 Disallow: /admin
 Disallow: /branches/
+
+Sitemap: https://graftedexchange.ca/sitemap.xml
