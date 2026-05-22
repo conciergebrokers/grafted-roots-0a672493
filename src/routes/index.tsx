@@ -64,8 +64,12 @@ function HomePage() {
         subtitle="A community of faith-first, business-forward people."
       >
         <div className="mx-auto max-w-3xl">
-          <div className="font-eyebrow text-sm uppercase tracking-[0.58em] text-refined-gold md:text-base">
-            Known <span className="mx-4 text-river-sand/35">·</span> Rooted <span className="mx-4 text-river-sand/35">·</span> Sent
+          <div className="font-eyebrow flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs uppercase tracking-[0.32em] text-refined-gold sm:gap-x-5 sm:text-sm sm:tracking-[0.46em] md:gap-x-6 md:text-base md:tracking-[0.58em]">
+            <span>Known</span>
+            <span className="text-river-sand/35">·</span>
+            <span>Rooted</span>
+            <span className="text-river-sand/35">·</span>
+            <span>Sent</span>
           </div>
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Button
