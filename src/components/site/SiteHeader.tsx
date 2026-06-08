@@ -44,7 +44,13 @@ export function SiteHeader() {
             asChild
             className="bg-deep-waters font-eyebrow text-xs uppercase tracking-[0.18em] text-river-sand hover:bg-still-pool"
           >
-            <Link to="/contact">Visit Grafted</Link>
+            <a
+              href="https://www.eventbrite.ca/e/grafted-faith-integrated-business-networking-tickets-1989963772211"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Visit Grafted
+            </a>
           </Button>
         </div>
 
@@ -88,7 +94,13 @@ export function SiteHeader() {
                   className="bg-deep-waters text-river-sand hover:bg-still-pool font-eyebrow text-xs uppercase tracking-[0.18em]"
                   onClick={() => setOpen(false)}
                 >
-                  <Link to="/contact">Visit Grafted</Link>
+                  <a
+                    href="https://www.eventbrite.ca/e/grafted-faith-integrated-business-networking-tickets-1989963772211"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Visit Grafted
+                  </a>
                 </Button>
                 <Button
                   asChild
