@@ -51,7 +51,13 @@ export function CTASection({
             size="lg"
             className="bg-refined-gold text-deepest hover:bg-sunrise-copper font-eyebrow text-xs uppercase tracking-[0.2em]"
           >
-            <Link to={primary.to}>{primary.label}</Link>
+            {primary.to.startsWith("http") ? (
+              <a href={primary.to} target="_blank" rel="noopener noreferrer">
+                {primary.label}
+              </a>
+            ) : (
+              <Link to={primary.to}>{primary.label}</Link>
+            )}
           </Button>
           {secondary && (
             <Button
@@ -60,7 +66,13 @@ export function CTASection({
               variant="outline"
               className="border-deep-waters/25 bg-transparent text-deep-waters hover:bg-deep-waters/5 hover:text-deep-waters font-eyebrow text-xs uppercase tracking-[0.2em]"
             >
-              <Link to={secondary.to}>{secondary.label}</Link>
+              {secondary.to.startsWith("http") ? (
+                <a href={secondary.to} target="_blank" rel="noopener noreferrer">
+                  {secondary.label}
+                </a>
+              ) : (
+                <Link to={secondary.to}>{secondary.label}</Link>
+              )}
             </Button>
           )}
         </div>
