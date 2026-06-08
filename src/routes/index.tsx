@@ -77,7 +77,13 @@ function HomePage() {
               size="lg"
               className="bg-refined-gold text-deepest hover:bg-sunrise-copper font-eyebrow text-xs uppercase tracking-[0.2em]"
             >
-              <Link to="/contact">Visit Grafted</Link>
+              <a
+                href="https://www.eventbrite.ca/e/grafted-faith-integrated-business-networking-tickets-1989963772211"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Visit Grafted
+              </a>
             </Button>
             <Button
               asChild
@@ -226,7 +232,13 @@ function HomePage() {
               size="lg"
               className="mt-8 bg-refined-gold text-deepest hover:bg-sunrise-copper font-eyebrow text-xs uppercase tracking-[0.2em]"
             >
-              <Link to="/contact">Plan Your First Visit</Link>
+              <a
+                href="https://www.eventbrite.ca/e/grafted-faith-integrated-business-networking-tickets-1989963772211"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Plan Your First Visit
+              </a>
             </Button>
           </Reveal>
           <Reveal delay={0.06}>
@@ -356,7 +368,10 @@ function HomePage() {
         eyebrow="Visit the Room"
         title="If you have been looking for a room like this, come visit."
         body="Bring your business. Bring your questions. Bring what you need and what you have to give."
-        primary={{ label: "Contact Grafted", to: "/contact" }}
+        primary={{
+          label: "Contact Grafted",
+          to: "https://www.eventbrite.ca/e/grafted-faith-integrated-business-networking-tickets-1989963772211",
+        }}
         secondary={{ label: "Read the FAQ", to: "/faq" }}
       />
     </>
