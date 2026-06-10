@@ -78,7 +78,7 @@ function HomePage() {
               className="bg-refined-gold text-deepest hover:bg-sunrise-copper font-eyebrow text-xs uppercase tracking-[0.2em]"
             >
               <a
-                href="https://www.eventbrite.ca/e/grafted-faith-integrated-business-networking-tickets-1989963772211"
+                href="https://www.eventbrite.ca/e/grafted-faith-integrated-business-networking-tickets-1991515299872"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -233,7 +233,7 @@ function HomePage() {
               className="mt-8 bg-refined-gold text-deepest hover:bg-sunrise-copper font-eyebrow text-xs uppercase tracking-[0.2em]"
             >
               <a
-                href="https://www.eventbrite.ca/e/grafted-faith-integrated-business-networking-tickets-1989963772211"
+                href="https://www.eventbrite.ca/e/grafted-faith-integrated-business-networking-tickets-1991515299872"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -370,7 +370,7 @@ function HomePage() {
         body="Bring your business. Bring your questions. Bring what you need and what you have to give."
         primary={{
           label: "Contact Grafted",
-          to: "https://www.eventbrite.ca/e/grafted-faith-integrated-business-networking-tickets-1989963772211",
+          to: "https://www.eventbrite.ca/e/grafted-faith-integrated-business-networking-tickets-1991515299872",
         }}
         secondary={{ label: "Read the FAQ", to: "/faq" }}
       />
