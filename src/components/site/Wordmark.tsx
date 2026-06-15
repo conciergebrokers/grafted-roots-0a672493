@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
+import logoAsset from "@/assets/grafted-logo.svg.asset.json";
 
 export function Wordmark({
   className,
@@ -8,17 +9,20 @@ export function Wordmark({
   className?: string;
   tone?: "dark" | "light";
 }) {
+  void tone;
   return (
     <Link
       to="/"
-      className={cn(
-        "font-display text-2xl tracking-tight",
-        tone === "light" ? "text-river-sand" : "text-deep-waters",
-        className,
-      )}
+      className={cn("inline-flex items-center", className)}
       aria-label="Grafted home"
     >
-      Grafted
+      <img
+        src={logoAsset.url}
+        alt="Grafted"
+        className="h-9 w-auto md:h-10"
+        loading="eager"
+        decoding="async"
+      />
     </Link>
   );
 }

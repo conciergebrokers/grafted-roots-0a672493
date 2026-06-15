@@ -1,13 +1,26 @@
-## Goal
-Route all primary "visit" CTAs on the homepage to the Eventbrite registration page, opening in a new browser tab.
+## Plan: Replace site logo & favicon
 
-## Affected buttons
-1. Hero — "Visit Grafted"
-2. "Visit Before You Join" section — "Plan Your First Visit"
-3. Footer CTASection — "Contact Grafted"
+### Assets
+1. Upload `magnific_..._jSaM487LD0.svg` (full logo) to CDN → `src/assets/grafted-logo.svg.asset.json`.
+2. Upload `magnific_..._vu0NlfZa47.svg` (favicon mark) to CDN → `src/assets/grafted-favicon.svg.asset.json`.
 
-## Implementation
-- **index.tsx**: Replace `Link to="/contact"` with an `<a>` tag pointing to `https://www.eventbrite.ca/e/grafted-faith-integrated-business-networking-tickets-1989963772211` with `target="_blank"` and `rel="noopener noreferrer"` for buttons 1 and 2.
-- **CTASection.tsx**: Update the component so that when the `primary.to` value starts with `http`, it renders a native `<a>` tag with `target="_blank" rel="noopener noreferrer"` instead of `Link`. Then pass the Eventbrite URL as the primary `to` value in the CTASection call in `index.tsx`.
+### Logo replacement
+Update `src/components/site/Wordmark.tsx` to render the uploaded SVG as an `<img>` inside the existing `<Link to="/">`, preserving:
+- `aria-label="Grafted home"`
+- height matching current wordmark (~2rem / `h-8` desktop, `h-9` in mobile sheet)
+- `tone` prop kept for API compatibility but no longer needed for color (SVG has its own colors); if the dark teal header looks bad on the colored logo, we can revisit.
 
-No other pages or routes are changed. The /contact route remains intact for future use.
+This single change covers every usage: `SiteHeader` (desktop + mobile sheet) — those are the only two call sites in the codebase.
+
+### Favicon
+In `src/routes/__root.tsx`, add to the `links` array:
+```ts
+{ rel: "icon", type: "image/svg+xml", href: "<favicon CDN url>" }
+```
+
+### Out of scope
+- No changes to OG image, theme color, or copy.
+- Wordmark `tone` prop kept (no callers to update).
+
+### Verification
+Confirm header renders the new logo on `/` and the browser tab shows the new favicon via preview.
