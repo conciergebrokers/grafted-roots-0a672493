@@ -19,7 +19,7 @@ export function Wordmark({
       <img
         src={logoAsset.url}
         alt="Grafted"
-        className="h-12 w-auto md:h-14"
+        className="h-14 w-auto md:h-16"
         loading="eager"
         decoding="async"
       />
