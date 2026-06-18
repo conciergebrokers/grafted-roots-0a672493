@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UnsubscribeRouteImport } from './routes/unsubscribe'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as PortalRouteImport } from './routes/portal'
 import { Route as MembersRouteImport } from './routes/members'
@@ -27,6 +28,11 @@ import { Route as LovableEmailTransactionalSendRouteImport } from './routes/lova
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
 
+const UnsubscribeRoute = UnsubscribeRouteImport.update({
+  id: '/unsubscribe',
+  path: '/unsubscribe',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -125,6 +131,7 @@ export interface FileRoutesByFullPath {
   '/members': typeof MembersRoute
   '/portal': typeof PortalRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/unsubscribe': typeof UnsubscribeRoute
   '/admin': typeof ProtectedAdminRouteWithChildren
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/admin/analytics': typeof ProtectedAdminAnalyticsRoute
@@ -143,6 +150,7 @@ export interface FileRoutesByTo {
   '/members': typeof MembersRoute
   '/portal': typeof PortalRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/unsubscribe': typeof UnsubscribeRoute
   '/admin': typeof ProtectedAdminRouteWithChildren
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/admin/analytics': typeof ProtectedAdminAnalyticsRoute
@@ -163,6 +171,7 @@ export interface FileRoutesById {
   '/members': typeof MembersRoute
   '/portal': typeof PortalRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/unsubscribe': typeof UnsubscribeRoute
   '/_protected/admin': typeof ProtectedAdminRouteWithChildren
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/_protected/admin/analytics': typeof ProtectedAdminAnalyticsRoute
@@ -183,6 +192,7 @@ export interface FileRouteTypes {
     | '/members'
     | '/portal'
     | '/sitemap.xml'
+    | '/unsubscribe'
     | '/admin'
     | '/email/unsubscribe'
     | '/admin/analytics'
@@ -201,6 +211,7 @@ export interface FileRouteTypes {
     | '/members'
     | '/portal'
     | '/sitemap.xml'
+    | '/unsubscribe'
     | '/admin'
     | '/email/unsubscribe'
     | '/admin/analytics'
@@ -220,6 +231,7 @@ export interface FileRouteTypes {
     | '/members'
     | '/portal'
     | '/sitemap.xml'
+    | '/unsubscribe'
     | '/_protected/admin'
     | '/email/unsubscribe'
     | '/_protected/admin/analytics'
@@ -240,6 +252,7 @@ export interface RootRouteChildren {
   MembersRoute: typeof MembersRoute
   PortalRoute: typeof PortalRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  UnsubscribeRoute: typeof UnsubscribeRoute
   EmailUnsubscribeRoute: typeof EmailUnsubscribeRoute
   ApiPublicMembershipApplyRoute: typeof ApiPublicMembershipApplyRoute
   LovableEmailSuppressionRoute: typeof LovableEmailSuppressionRoute
@@ -250,6 +263,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/unsubscribe': {
+      id: '/unsubscribe'
+      path: '/unsubscribe'
+      fullPath: '/unsubscribe'
+      preLoaderRoute: typeof UnsubscribeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
@@ -407,6 +427,7 @@ const rootRouteChildren: RootRouteChildren = {
   MembersRoute: MembersRoute,
   PortalRoute: PortalRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  UnsubscribeRoute: UnsubscribeRoute,
   EmailUnsubscribeRoute: EmailUnsubscribeRoute,
   ApiPublicMembershipApplyRoute: ApiPublicMembershipApplyRoute,
   LovableEmailSuppressionRoute: LovableEmailSuppressionRoute,
