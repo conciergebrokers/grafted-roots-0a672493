@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { createClient } from '@supabase/supabase-js'
-import { render as renderAsync } from '@react-email/components'
+import { render } from '@react-email/components'
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 import { TEMPLATES } from '@/lib/email-templates/registry'
@@ -102,8 +102,8 @@ export const Route = createFileRoute('/api/public/membership-apply')({
         try {
           const messageId = `membership-${inserted.id}`
           const element = React.createElement(template.component, templateData)
-          const html = await renderAsync(element)
-          const text = await renderAsync(element, { plainText: true })
+          const html = await render(element)
+          const text = await render(element, { plainText: true })
           const subject =
             typeof template.subject === 'function'
               ? template.subject(templateData)
