@@ -1,17 +1,19 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "@tanstack/react-router";
-import { useAuth } from "@/lib/auth";
+import { Link, createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_protected")({
   component: ProtectedLayout,
 });
 
 function ProtectedLayout() {
-  const auth = useAuth();
-  if (!auth.isAuthenticated) {
-    return (
+  // These routes are placeholder previews. Until real auth + RLS-backed
+  // data is wired (via the integration-managed `_authenticated` layout
+  // and server-side role checks), this layout unconditionally renders a
+  // locked notice and never exposes the child Outlet. Do NOT reintroduce
+  // a client-only `useAuth()` gate here — it would be a trust surface
+  // attackers can flip in devtools.
+  return (
       <div className="flex min-h-[70vh] items-center justify-center bg-river-sand px-5 py-20">
         <div className="max-w-md rounded-2xl border border-border bg-card p-10 text-center">
           <div className="mx-auto inline-flex h-12 w-12 items-center justify-center rounded-full bg-deep-waters text-refined-gold">
@@ -35,7 +37,5 @@ function ProtectedLayout() {
           </div>
         </div>
       </div>
-    );
-  }
-  return <Outlet />;
+  );
 }
