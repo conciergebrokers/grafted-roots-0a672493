@@ -101,6 +101,51 @@ export type Database = {
         }
         Relationships: []
       }
+      membership_applications: {
+        Row: {
+          business_name: string
+          business_size: string
+          consent: boolean
+          created_at: string
+          email: string
+          first_name: string
+          id: string
+          interest: string
+          last_name: string
+          message: string
+          phone: string | null
+          website_or_social: string | null
+        }
+        Insert: {
+          business_name: string
+          business_size: string
+          consent: boolean
+          created_at?: string
+          email: string
+          first_name: string
+          id?: string
+          interest: string
+          last_name: string
+          message: string
+          phone?: string | null
+          website_or_social?: string | null
+        }
+        Update: {
+          business_name?: string
+          business_size?: string
+          consent?: boolean
+          created_at?: string
+          email?: string
+          first_name?: string
+          id?: string
+          interest?: string
+          last_name?: string
+          message?: string
+          phone?: string | null
+          website_or_social?: string | null
+        }
+        Relationships: []
+      }
       suppressed_emails: {
         Row: {
           created_at: string
