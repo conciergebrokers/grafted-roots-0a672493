@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { ExternalLink, Ticket } from "lucide-react";
 
-const EVENTBRITE_EVENT_ID = "1991515299872";
+const EVENTBRITE_EVENT_ID = "1992099094016";
 const EVENTBRITE_TRIGGER_ID = `eventbrite-widget-modal-trigger-${EVENTBRITE_EVENT_ID}`;
 const EVENTBRITE_URL =
-  "https://www.eventbrite.com/e/grafted-faith-integrated-business-networking-tickets-1991515299872";
+  "https://www.eventbrite.ca/e/grafted-faith-integrated-business-networking-tickets-1992099094016";
 const EVENTBRITE_SCRIPT_ID = "eventbrite-checkout-widget-script";
 
 declare global {
