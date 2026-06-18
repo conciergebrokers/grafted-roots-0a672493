@@ -10,7 +10,6 @@ import {
   Hammer,
   Repeat,
   ArrowRight,
-  LayoutDashboard,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/site/PageHero";
