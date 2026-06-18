@@ -45,7 +45,7 @@ export function SiteHeader() {
             className="bg-deep-waters font-eyebrow text-xs uppercase tracking-[0.18em] text-river-sand hover:bg-still-pool"
           >
             <a
-              href="https://www.eventbrite.ca/e/grafted-faith-integrated-business-networking-tickets-1991515299872"
+              href="https://www.eventbrite.ca/e/grafted-faith-integrated-business-networking-tickets-1992099094016"
               target="_blank"
               rel="noopener noreferrer"
             >
