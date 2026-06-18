@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
-import { Wordmark } from "./Wordmark";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
@@ -18,7 +17,6 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 md:px-8">
-        <Wordmark />
 
         <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
           {NAV.map((item) => (
@@ -66,8 +64,7 @@ export function SiteHeader() {
             </SheetTrigger>
             <SheetContent side="right" className="w-[85%] sm:w-[380px]">
               <SheetTitle className="sr-only">Menu</SheetTitle>
-              <div className="flex items-center justify-between pb-6">
-                <Wordmark />
+              <div className="flex items-center justify-end pb-6">
                 <button
                   onClick={() => setOpen(false)}
                   aria-label="Close menu"
