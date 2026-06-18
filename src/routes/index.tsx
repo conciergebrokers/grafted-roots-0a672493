@@ -10,7 +10,6 @@ import {
   Hammer,
   Repeat,
   ArrowRight,
-  LayoutDashboard,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/site/PageHero";
@@ -342,26 +341,6 @@ function HomePage() {
             </Reveal>
           ))}
         </div>
-
-        <Reveal delay={0.1}>
-          <div className="mt-12 grid gap-6 rounded-2xl border border-refined-gold/40 bg-river-pale p-8 md:grid-cols-[auto_1fr] md:items-center">
-            <div className="inline-flex h-14 w-14 items-center justify-center rounded-xl bg-deep-waters text-refined-gold">
-              <LayoutDashboard className="h-6 w-6" strokeWidth={1.5} />
-            </div>
-            <div>
-              <div className="font-eyebrow text-[10px] uppercase tracking-[0.28em] text-refined-gold">
-                Coming soon
-              </div>
-              <div className="mt-2 font-serif text-2xl text-deep-waters">
-                Future Member Portal
-              </div>
-              <p className="mt-2 text-deep-waters/75">
-                Personal slip activity, prayer follow-up, member directory, and
-                branch updates will live here.
-              </p>
-            </div>
-          </div>
-        </Reveal>
       </Section>
 
       <CTASection
