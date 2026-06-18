@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UnsubscribeRouteImport } from './routes/unsubscribe'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as PortalRouteImport } from './routes/portal'
 import { Route as MembersRouteImport } from './routes/members'
@@ -17,11 +18,21 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ProtectedRouteImport } from './routes/_protected'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EmailUnsubscribeRouteImport } from './routes/email/unsubscribe'
 import { Route as ProtectedAdminRouteImport } from './routes/_protected/admin'
+import { Route as LovableEmailSuppressionRouteImport } from './routes/lovable/email/suppression'
+import { Route as ApiPublicMembershipApplyRouteImport } from './routes/api/public/membership-apply'
 import { Route as ProtectedBranchesBranchIdRouteImport } from './routes/_protected/branches.$branchId'
 import { Route as ProtectedAdminAnalyticsRouteImport } from './routes/_protected/admin.analytics'
+import { Route as LovableEmailTransactionalSendRouteImport } from './routes/lovable/email/transactional/send'
+import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
 
+const UnsubscribeRoute = UnsubscribeRouteImport.update({
+  id: '/unsubscribe',
+  path: '/unsubscribe',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -61,11 +72,27 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EmailUnsubscribeRoute = EmailUnsubscribeRouteImport.update({
+  id: '/email/unsubscribe',
+  path: '/email/unsubscribe',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProtectedAdminRoute = ProtectedAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
   getParentRoute: () => ProtectedRoute,
 } as any)
+const LovableEmailSuppressionRoute = LovableEmailSuppressionRouteImport.update({
+  id: '/lovable/email/suppression',
+  path: '/lovable/email/suppression',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicMembershipApplyRoute =
+  ApiPublicMembershipApplyRouteImport.update({
+    id: '/api/public/membership-apply',
+    path: '/api/public/membership-apply',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ProtectedBranchesBranchIdRoute =
   ProtectedBranchesBranchIdRouteImport.update({
     id: '/branches/$branchId',
@@ -77,6 +104,18 @@ const ProtectedAdminAnalyticsRoute = ProtectedAdminAnalyticsRouteImport.update({
   path: '/analytics',
   getParentRoute: () => ProtectedAdminRoute,
 } as any)
+const LovableEmailTransactionalSendRoute =
+  LovableEmailTransactionalSendRouteImport.update({
+    id: '/lovable/email/transactional/send',
+    path: '/lovable/email/transactional/send',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const LovableEmailTransactionalPreviewRoute =
+  LovableEmailTransactionalPreviewRouteImport.update({
+    id: '/lovable/email/transactional/preview',
+    path: '/lovable/email/transactional/preview',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const LovableEmailQueueProcessRoute =
   LovableEmailQueueProcessRouteImport.update({
     id: '/lovable/email/queue/process',
@@ -92,10 +131,16 @@ export interface FileRoutesByFullPath {
   '/members': typeof MembersRoute
   '/portal': typeof PortalRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/unsubscribe': typeof UnsubscribeRoute
   '/admin': typeof ProtectedAdminRouteWithChildren
+  '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/admin/analytics': typeof ProtectedAdminAnalyticsRoute
   '/branches/$branchId': typeof ProtectedBranchesBranchIdRoute
+  '/api/public/membership-apply': typeof ApiPublicMembershipApplyRoute
+  '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
+  '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
+  '/lovable/email/transactional/send': typeof LovableEmailTransactionalSendRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -105,10 +150,16 @@ export interface FileRoutesByTo {
   '/members': typeof MembersRoute
   '/portal': typeof PortalRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/unsubscribe': typeof UnsubscribeRoute
   '/admin': typeof ProtectedAdminRouteWithChildren
+  '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/admin/analytics': typeof ProtectedAdminAnalyticsRoute
   '/branches/$branchId': typeof ProtectedBranchesBranchIdRoute
+  '/api/public/membership-apply': typeof ApiPublicMembershipApplyRoute
+  '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
+  '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
+  '/lovable/email/transactional/send': typeof LovableEmailTransactionalSendRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -120,10 +171,16 @@ export interface FileRoutesById {
   '/members': typeof MembersRoute
   '/portal': typeof PortalRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/unsubscribe': typeof UnsubscribeRoute
   '/_protected/admin': typeof ProtectedAdminRouteWithChildren
+  '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/_protected/admin/analytics': typeof ProtectedAdminAnalyticsRoute
   '/_protected/branches/$branchId': typeof ProtectedBranchesBranchIdRoute
+  '/api/public/membership-apply': typeof ApiPublicMembershipApplyRoute
+  '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
+  '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
+  '/lovable/email/transactional/send': typeof LovableEmailTransactionalSendRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -135,10 +192,16 @@ export interface FileRouteTypes {
     | '/members'
     | '/portal'
     | '/sitemap.xml'
+    | '/unsubscribe'
     | '/admin'
+    | '/email/unsubscribe'
     | '/admin/analytics'
     | '/branches/$branchId'
+    | '/api/public/membership-apply'
+    | '/lovable/email/suppression'
     | '/lovable/email/queue/process'
+    | '/lovable/email/transactional/preview'
+    | '/lovable/email/transactional/send'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -148,10 +211,16 @@ export interface FileRouteTypes {
     | '/members'
     | '/portal'
     | '/sitemap.xml'
+    | '/unsubscribe'
     | '/admin'
+    | '/email/unsubscribe'
     | '/admin/analytics'
     | '/branches/$branchId'
+    | '/api/public/membership-apply'
+    | '/lovable/email/suppression'
     | '/lovable/email/queue/process'
+    | '/lovable/email/transactional/preview'
+    | '/lovable/email/transactional/send'
   id:
     | '__root__'
     | '/'
@@ -162,10 +231,16 @@ export interface FileRouteTypes {
     | '/members'
     | '/portal'
     | '/sitemap.xml'
+    | '/unsubscribe'
     | '/_protected/admin'
+    | '/email/unsubscribe'
     | '/_protected/admin/analytics'
     | '/_protected/branches/$branchId'
+    | '/api/public/membership-apply'
+    | '/lovable/email/suppression'
     | '/lovable/email/queue/process'
+    | '/lovable/email/transactional/preview'
+    | '/lovable/email/transactional/send'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -177,11 +252,24 @@ export interface RootRouteChildren {
   MembersRoute: typeof MembersRoute
   PortalRoute: typeof PortalRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  UnsubscribeRoute: typeof UnsubscribeRoute
+  EmailUnsubscribeRoute: typeof EmailUnsubscribeRoute
+  ApiPublicMembershipApplyRoute: typeof ApiPublicMembershipApplyRoute
+  LovableEmailSuppressionRoute: typeof LovableEmailSuppressionRoute
   LovableEmailQueueProcessRoute: typeof LovableEmailQueueProcessRoute
+  LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
+  LovableEmailTransactionalSendRoute: typeof LovableEmailTransactionalSendRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/unsubscribe': {
+      id: '/unsubscribe'
+      path: '/unsubscribe'
+      fullPath: '/unsubscribe'
+      preLoaderRoute: typeof UnsubscribeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
@@ -238,12 +326,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/email/unsubscribe': {
+      id: '/email/unsubscribe'
+      path: '/email/unsubscribe'
+      fullPath: '/email/unsubscribe'
+      preLoaderRoute: typeof EmailUnsubscribeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_protected/admin': {
       id: '/_protected/admin'
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof ProtectedAdminRouteImport
       parentRoute: typeof ProtectedRoute
+    }
+    '/lovable/email/suppression': {
+      id: '/lovable/email/suppression'
+      path: '/lovable/email/suppression'
+      fullPath: '/lovable/email/suppression'
+      preLoaderRoute: typeof LovableEmailSuppressionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/membership-apply': {
+      id: '/api/public/membership-apply'
+      path: '/api/public/membership-apply'
+      fullPath: '/api/public/membership-apply'
+      preLoaderRoute: typeof ApiPublicMembershipApplyRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_protected/branches/$branchId': {
       id: '/_protected/branches/$branchId'
@@ -258,6 +367,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/analytics'
       preLoaderRoute: typeof ProtectedAdminAnalyticsRouteImport
       parentRoute: typeof ProtectedAdminRoute
+    }
+    '/lovable/email/transactional/send': {
+      id: '/lovable/email/transactional/send'
+      path: '/lovable/email/transactional/send'
+      fullPath: '/lovable/email/transactional/send'
+      preLoaderRoute: typeof LovableEmailTransactionalSendRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lovable/email/transactional/preview': {
+      id: '/lovable/email/transactional/preview'
+      path: '/lovable/email/transactional/preview'
+      fullPath: '/lovable/email/transactional/preview'
+      preLoaderRoute: typeof LovableEmailTransactionalPreviewRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/lovable/email/queue/process': {
       id: '/lovable/email/queue/process'
@@ -304,7 +427,13 @@ const rootRouteChildren: RootRouteChildren = {
   MembersRoute: MembersRoute,
   PortalRoute: PortalRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  UnsubscribeRoute: UnsubscribeRoute,
+  EmailUnsubscribeRoute: EmailUnsubscribeRoute,
+  ApiPublicMembershipApplyRoute: ApiPublicMembershipApplyRoute,
+  LovableEmailSuppressionRoute: LovableEmailSuppressionRoute,
   LovableEmailQueueProcessRoute: LovableEmailQueueProcessRoute,
+  LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,
+  LovableEmailTransactionalSendRoute: LovableEmailTransactionalSendRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

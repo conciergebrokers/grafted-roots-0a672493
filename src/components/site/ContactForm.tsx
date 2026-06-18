@@ -62,10 +62,29 @@ export function ContactForm() {
     defaultValues: { consent: undefined as unknown as true },
   });
 
-  const onSubmit = async (_values: FormValues) => {
-    await new Promise((r) => setTimeout(r, 500));
-    setSubmitted(true);
-    reset();
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const onSubmit = async (values: FormValues) => {
+    setSubmitError(null);
+    try {
+      const res = await fetch("/api/public/membership-apply", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data?.error || "Submission failed");
+      }
+      setSubmitted(true);
+      reset();
+    } catch (err) {
+      setSubmitError(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please try again."
+      );
+    }
   };
 
   if (submitted) {
@@ -207,6 +226,9 @@ export function ContactForm() {
       >
         {isSubmitting ? "Sending..." : "Send Message"}
       </Button>
+      {submitError && (
+        <p className="text-sm text-destructive">{submitError}</p>
+      )}
     </form>
   );
 }
