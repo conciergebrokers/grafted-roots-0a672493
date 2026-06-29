@@ -81,14 +81,26 @@ export const MEETING_SEGMENTS: {
   },
 ];
 
-export const PRICING_TIERS = [
-  { label: "Solo or home-based", price: 100 },
-  { label: "1 to 3 employees", price: 150 },
-  { label: "3 to 5 employees", price: 200 },
-  { label: "5 to 10 employees", price: 250 },
-  { label: "10 to 20 employees", price: 350 },
-  { label: "20 or more employees", price: 500 },
-];
+export const MEMBERSHIP = {
+  price: 150,
+  currency: "CAD",
+  cadence: "month",
+  label: "$150 CAD / month",
+  highlights: [
+    "Billed on the 1st of each month",
+    "No GST charged at this time",
+    "Cancel or update your card any time through the Stripe customer portal",
+    "Lunch is on your own at each meeting",
+  ],
+  founding: {
+    seats: 15,
+    line: "The first 15 paid signups are founding members, flagged automatically by payment time and recognized with a founding badge in the directory.",
+  },
+  launchCohort:
+    "Signups on or before June 30, 2026 pay nothing at signup. The first full $150 is charged on July 1, 2026.",
+  ongoing:
+    "Signups from July 1, 2026 onward pay a prorated amount for the days until the next 1st, then $150 on the 1st each month.",
+};
 
 export const SLIP_TYPES = [
   {
@@ -181,7 +193,19 @@ export const FAQ_ITEMS = [
   },
   {
     q: "What does membership cost?",
-    a: "Membership is tiered by business size. Solo or home-based: $100 per month. 1 to 3 employees: $150 per month. 3 to 5 employees: $200 per month. 5 to 10 employees: $250 per month. 10 to 20 employees: $350 per month. 20 or more employees: $500 per month. Twenty percent of membership fees is set aside for charitable giving, with members voting on where those funds are directed.",
+    a: "Membership is $150 CAD per month, the same for every member. No GST is charged at this time. The first 15 paid signups are founding members.",
+  },
+  {
+    q: "When am I charged?",
+    a: "Everyone bills on the 1st of the month. If you sign up on or before June 30, 2026 you pay nothing at signup and your first full $150 is charged on July 1, 2026. If you sign up on or after July 1, 2026 you pay a prorated amount for the days until the next 1st, then $150 on the 1st each month.",
+  },
+  {
+    q: "How do I cancel or update my card?",
+    a: "Billing is self-serve. You can update your card or cancel anytime through the Stripe customer portal linked from your member account.",
+  },
+  {
+    q: "What does founding member mean?",
+    a: "The first 15 paid signups are founding members. The flag is set automatically by payment time, shown as a founding badge in the directory, and recognized in the community as the people who helped Grafted begin.",
   },
   {
     q: "Are meals included?",
@@ -189,7 +213,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: "What if I cannot afford membership?",
-    a: "We believe where we put our money is tied to where our heart is. Investing in yourself and your business growth is an important step in business. If there are extenuating circumstances, we are open to hearing about them.",
+    a: "We believe where we put our money is tied to where our heart is. Investing in yourself and your business growth is an important step. If there are extenuating circumstances, we are open to hearing about them.",
   },
   {
     q: "Are industries exclusive?",
