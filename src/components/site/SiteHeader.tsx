@@ -43,7 +43,7 @@ export function SiteHeader() {
                 {item.label}
               </Link>
             ))}
-            <Link to="/contact" className={membershipLinkClass}>
+            <Link to="/join" className={membershipLinkClass}>
               Apply for Membership
             </Link>
           </nav>
@@ -109,7 +109,7 @@ export function SiteHeader() {
                   className="font-eyebrow text-xs uppercase tracking-[0.18em]"
                   onClick={() => setOpen(false)}
                 >
-                  <Link to="/contact">Apply for Membership</Link>
+                  <Link to="/join">Apply for Membership</Link>
                 </Button>
               </div>
             </SheetContent>
