@@ -40,6 +40,9 @@ export function SiteHeader() {
           <Button asChild variant="ghost" className="font-eyebrow text-xs uppercase tracking-[0.18em]">
             <Link to="/contact">Apply for Membership</Link>
           </Button>
+          <Button asChild variant="ghost" className="font-eyebrow text-xs uppercase tracking-[0.18em]">
+            <Link to="/auth">Sign in</Link>
+          </Button>
           <Button
             asChild
             className="bg-deep-waters font-eyebrow text-xs uppercase tracking-[0.18em] text-river-sand hover:bg-still-pool"
@@ -108,6 +111,14 @@ export function SiteHeader() {
                   onClick={() => setOpen(false)}
                 >
                   <Link to="/contact">Apply for Membership</Link>
+                </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  className="font-eyebrow text-xs uppercase tracking-[0.18em]"
+                  onClick={() => setOpen(false)}
+                >
+                  <Link to="/auth">Sign in</Link>
                 </Button>
               </div>
             </SheetContent>
