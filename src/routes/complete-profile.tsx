@@ -4,7 +4,7 @@ import { ArrowRight, Lock } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
 import { Section } from "@/components/site/Section";
 import { Button } from "@/components/ui/button";
-import { ANNUAL_REVENUE_RANGES, BUSINESS_CATEGORIES, CONFIDENTIAL_METRICS_COPY, MEMBER_STORAGE_KEY, STAGE_OF_BUSINESS } from "@/data/memberRegistration";
+import { ANNUAL_REVENUE_RANGES, BUSINESS_CATEGORIES, CONFIDENTIAL_METRICS_COPY, MEMBER_STORAGE_KEY, STAGE_OF_BUSINESS, type AccountStatus } from "@/data/memberRegistration";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/complete-profile")({
@@ -41,20 +41,56 @@ const initialProfile = {
 
 type ProfileForm = typeof initialProfile;
 
+function accountStatusForPayment(paymentStatus: string | null | undefined): AccountStatus {
+  if (paymentStatus === "paid") return "active";
+  if (paymentStatus === "failed" || paymentStatus === "past_due") return "past_due";
+  if (paymentStatus === "cancelled" || paymentStatus === "canceled" || paymentStatus === "unpaid") return "cancelled";
+  return "pending_payment";
+}
+
 function CompleteProfilePage() {
   const navigate = useNavigate();
   const [status, setStatus] = useState<"idle" | "saving">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [paymentStatus, setPaymentStatus] = useState<string>("pending");
   const [form, setForm] = useState<ProfileForm>(initialProfile);
 
   useEffect(() => {
-    const raw = localStorage.getItem(MEMBER_STORAGE_KEY);
-    if (!raw) return;
-    try {
-      const saved = JSON.parse(raw);
-      setForm((current) => ({ ...current, email: saved.email ?? "" }));
-    } catch {
-      // Leave blank.
-    }
+    const loadProfileContext = async () => {
+      const raw = localStorage.getItem(MEMBER_STORAGE_KEY);
+      if (raw) {
+        try {
+          const saved = JSON.parse(raw);
+          setForm((current) => ({ ...current, ...saved, email: saved.email ?? current.email }));
+          if (saved.payment_status) setPaymentStatus(saved.payment_status);
+        } catch {
+          // Leave blank.
+        }
+      }
+
+      try {
+        const supabaseAny = supabase as any;
+        const { data } = await supabase.auth.getUser();
+        const email = data?.user?.email;
+        if (!email) return;
+
+        setForm((current) => ({ ...current, email }));
+
+        const { data: existingProfile } = await supabaseAny
+          .from("member_profiles")
+          .select("email, payment_status")
+          .eq("email", email)
+          .maybeSingle();
+
+        if (existingProfile?.payment_status) {
+          setPaymentStatus(existingProfile.payment_status);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    loadProfileContext();
   }, []);
 
   const update = (key: keyof ProfileForm, value: string | boolean) => setForm((current) => ({ ...current, [key]: value }));
@@ -62,23 +98,46 @@ function CompleteProfilePage() {
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setStatus("saving");
+    setErrorMessage("");
 
     try {
       const supabaseAny = supabase as any;
       const { data } = await supabase.auth.getUser();
       const email = data?.user?.email ?? form.email;
-      const { data: existingProfile } = await supabaseAny.from("member_profiles").select("payment_status").eq("email", email).maybeSingle();
-      const paymentStatus = existingProfile?.payment_status ?? "pending";
-      const accountStatus = paymentStatus === "paid" ? "active" : "pending_payment";
-      const payload = { ...form, email, user_id: data?.user?.id ?? null, number_of_employees: form.number_of_employees ? Number(form.number_of_employees) : null, profile_complete: true, account_status: accountStatus, updated_at: new Date().toISOString() };
+
+      if (!email) {
+        setStatus("idle");
+        setErrorMessage("Please return to the membership signup step so your profile can be tied to your account.");
+        return;
+      }
+
+      const { data: existingProfile } = await supabaseAny
+        .from("member_profiles")
+        .select("payment_status, account_status")
+        .eq("email", email)
+        .maybeSingle();
+
+      const currentPaymentStatus = existingProfile?.payment_status ?? paymentStatus ?? "pending";
+      const accountStatus = accountStatusForPayment(currentPaymentStatus);
+
+      const payload = {
+        ...form,
+        email,
+        user_id: data?.user?.id ?? null,
+        number_of_employees: form.number_of_employees ? Number(form.number_of_employees) : null,
+        profile_complete: true,
+        account_status: accountStatus,
+        updated_at: new Date().toISOString(),
+      };
+
       await supabaseAny.from("member_profiles").upsert(payload, { onConflict: "email" });
-      localStorage.setItem(MEMBER_STORAGE_KEY, JSON.stringify({ ...payload, payment_status: paymentStatus }));
+      localStorage.setItem(MEMBER_STORAGE_KEY, JSON.stringify({ ...payload, payment_status: currentPaymentStatus }));
+      navigate({ to: "/profile" });
     } catch (error) {
       console.error(error);
-      localStorage.setItem(MEMBER_STORAGE_KEY, JSON.stringify({ ...form, profile_complete: true, account_status: "pending_payment", updated_at: new Date().toISOString() }));
+      setStatus("idle");
+      setErrorMessage("Your profile could not be saved. Please try again, or contact Grafted if the issue continues.");
     }
-
-    navigate({ to: "/profile" });
   };
 
   return (
@@ -86,6 +145,9 @@ function CompleteProfilePage() {
       <PageHero eyebrow="Member Profile" title="Complete your profile." subtitle="Public fields can support the future directory. Private metrics stay Grafted-only." />
       <Section tone="sand">
         <form onSubmit={submit} className="mx-auto max-w-5xl rounded-2xl border border-border bg-background p-6 shadow-sm md:p-8">
+          <div className="mb-6 rounded-2xl border border-deep-waters/10 bg-river-pale p-5 text-sm text-deep-waters/75">
+            Payment status: <strong>{paymentStatus}</strong>. Your profile can be saved now. Your account only becomes active after Stripe confirms payment.
+          </div>
           <div className="grid gap-8 lg:grid-cols-2">
             <div className="space-y-5">
               <h2 className="font-display text-3xl text-deep-waters">Public profile</h2>
@@ -115,6 +177,7 @@ function CompleteProfilePage() {
               </div>
             </div>
           </div>
+          {errorMessage && <p className="mt-6 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{errorMessage}</p>}
           <div className="mt-8 flex flex-wrap gap-3"><Button disabled={status === "saving"} className="bg-deep-waters text-river-sand hover:bg-still-pool font-eyebrow text-xs uppercase tracking-[0.2em]">{status === "saving" ? "Saving..." : "Save Profile"}<ArrowRight className="ml-2 h-4 w-4" /></Button><Button asChild variant="outline"><Link to="/join">Back to signup</Link></Button></div>
         </form>
       </Section>
