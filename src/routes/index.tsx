@@ -340,7 +340,7 @@ function HomePage() {
         body="Bring your business. Bring your questions. Bring what you need and what you have to give."
         primary={{
           label: "Contact Grafted",
-          to: "https://www.eventbrite.ca/e/grafted-faith-integrated-business-networking-tickets-1992099094016",
+          to: "/contact",
         }}
         secondary={{ label: "Read the FAQ", to: "/faq" }}
       />
