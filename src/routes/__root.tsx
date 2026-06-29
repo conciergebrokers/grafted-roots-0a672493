@@ -12,7 +12,7 @@ import {
 import appCss from "../styles.css?url";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
-import faviconAsset from "@/assets/grafted-favicon.svg.asset.json";
+import faviconAsset from "@/assets/favicon.ico.asset.json";
 
 function NotFoundComponent() {
   return (
