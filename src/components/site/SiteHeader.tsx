@@ -15,59 +15,42 @@ const NAV = [
 ] as const;
 
 const navLinkClass =
-  "rounded-md px-3 py-2 font-eyebrow text-[11px] uppercase tracking-[0.18em] text-deep-waters/65 transition-colors hover:bg-river-pale hover:text-deep-waters data-[status=active]:bg-river-pale data-[status=active]:text-deep-waters";
+  "rounded-full px-3.5 py-2 font-eyebrow text-[11px] uppercase tracking-[0.18em] text-deep-waters/65 transition-colors hover:bg-river-pale hover:text-deep-waters data-[status=active]:bg-river-pale data-[status=active]:text-deep-waters";
 
-const actionButtonClass =
-  "h-10 rounded-md px-4 font-eyebrow text-[11px] uppercase tracking-[0.16em] whitespace-nowrap transition-colors";
+const membershipLinkClass =
+  "inline-flex h-10 items-center rounded-full px-3.5 font-eyebrow text-[11px] uppercase tracking-[0.16em] text-deep-waters/70 transition-colors hover:bg-refined-gold/10 hover:text-deep-waters";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/75">
-      <div className="mx-auto grid h-[72px] max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-5 px-5 md:px-8">
+    <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/85">
+      <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between gap-6 px-5 md:px-8">
         <div className="flex min-w-0 items-center">
-          <Wordmark className="shrink-0" />
+          <Wordmark />
         </div>
 
-        <nav className="hidden items-center justify-center gap-1 xl:flex" aria-label="Primary">
-          {NAV.map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              className={cn(navLinkClass)}
-              activeOptions={{ exact: item.to === "/" }}
-            >
-              {item.label}
+        <div className="hidden items-center justify-end gap-3 lg:flex">
+          <nav className="flex items-center gap-1" aria-label="Primary">
+            {NAV.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={cn(navLinkClass)}
+                activeOptions={{ exact: item.to === "/" }}
+              >
+                {item.label}
+              </Link>
+            ))}
+            <Link to="/join" className={membershipLinkClass}>
+              Apply for Membership
             </Link>
-          ))}
-        </nav>
+          </nav>
 
-        <div className="hidden items-center justify-end gap-2.5 xl:flex">
+          <span aria-hidden className="h-6 w-px bg-deep-waters/12" />
+
           <Button
             asChild
-            className={cn(
-              actionButtonClass,
-              "bg-refined-gold text-deepest shadow-none hover:bg-sunrise-copper",
-            )}
-          >
-            <Link to="/join">Apply for Membership</Link>
-          </Button>
-          <Button
-            asChild
-            variant="ghost"
-            className={cn(
-              actionButtonClass,
-              "text-deep-waters/70 hover:bg-river-pale hover:text-deep-waters",
-            )}
-          >
-            <Link to="/auth">Sign in</Link>
-          </Button>
-          <Button
-            asChild
-            className={cn(
-              actionButtonClass,
-              "bg-deep-waters text-river-sand shadow-none hover:bg-still-pool",
-            )}
+            className="h-10 rounded-md bg-deep-waters px-5 font-eyebrow text-[11px] uppercase tracking-[0.16em] text-river-sand shadow-none transition-colors hover:bg-still-pool"
           >
             <a href={EVENTBRITE_URL} target="_blank" rel="noopener noreferrer">
               Visit Grafted
@@ -75,7 +58,7 @@ export function SiteHeader() {
           </Button>
         </div>
 
-        <div className="justify-self-end xl:hidden">
+        <div className="lg:hidden">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
               <button
@@ -121,18 +104,11 @@ export function SiteHeader() {
                 </Button>
                 <Button
                   asChild
-                  className="bg-refined-gold text-deepest hover:bg-sunrise-copper font-eyebrow text-xs uppercase tracking-[0.18em]"
-                  onClick={() => setOpen(false)}
-                >
-                  <Link to="/join">Apply for Membership</Link>
-                </Button>
-                <Button
-                  asChild
                   variant="outline"
                   className="font-eyebrow text-xs uppercase tracking-[0.18em]"
                   onClick={() => setOpen(false)}
                 >
-                  <Link to="/auth">Sign in</Link>
+                  <Link to="/join">Apply for Membership</Link>
                 </Button>
               </div>
             </SheetContent>
