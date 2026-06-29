@@ -4,8 +4,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { PRICING_TIERS } from "@/data/grafted";
-
 export function FAQAccordion({
   items,
 }: {
@@ -32,27 +30,6 @@ export function FAQAccordion({
 }
 
 function FAQAnswer({ item }: { item: { q: string; a: string } }) {
-  if (item.q === "What does membership cost?") {
-    return (
-      <div className="space-y-5">
-        <p>Membership is tiered by business size.</p>
-        <div className="grid gap-2 sm:grid-cols-2">
-          {PRICING_TIERS.map((tier) => (
-            <div
-              key={tier.label}
-              className="flex items-center justify-between gap-4 rounded-xl border border-border bg-river-sand px-4 py-3"
-            >
-              <span className="text-sm text-deep-waters/75">{tier.label}</span>
-              <span className="shrink-0 font-serif text-lg text-deep-waters">
-                ${tier.price}/mo
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="space-y-3">
       {splitIntoReadableParagraphs(item.a).map((paragraph) => (
