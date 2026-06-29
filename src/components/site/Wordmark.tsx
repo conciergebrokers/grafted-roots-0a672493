@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
-import logoAsset from "@/assets/grafted-logo.svg.asset.json";
+import logoAsset from "@/assets/grafted-logo.png.asset.json";
 
 export function Wordmark({
   className,
