@@ -48,7 +48,7 @@ export const CONFIDENTIAL_METRICS_COPY =
   "These answers are confidential. They are never shown to other members or to the public. Grafted uses them only for overall reporting on the membership, in aggregate, never tied back to your name or business.";
 
 export const STRIPE_PLACEHOLDER_COPY =
-  "Membership billing will be completed through Stripe. Stripe checkout is being connected.";
+  "Membership billing is handled through Stripe. Payment status is updated automatically after Stripe confirms checkout and subscription events.";
 
 export const MEMBER_STORAGE_KEY = "grafted_pending_member_signup";
 
