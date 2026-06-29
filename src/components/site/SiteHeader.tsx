@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
+import { Wordmark } from "@/components/site/Wordmark";
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -17,8 +18,9 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 md:px-8">
-        {/* Invisible left spacer to balance the right-side buttons */}
-        <div className="hidden md:block md:flex-1" aria-hidden="true" />
+        <div className="flex flex-1 items-center">
+          <Wordmark />
+        </div>
 
         <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
           {NAV.map((item) => (
