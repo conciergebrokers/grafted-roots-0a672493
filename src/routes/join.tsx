@@ -19,6 +19,26 @@ export const Route = createFileRoute("/join")({
 const fieldClass = "mt-2 w-full rounded-md border border-deep-waters/15 bg-background px-4 py-3 text-sm text-deep-waters outline-none focus:border-refined-gold focus:ring-2 focus:ring-refined-gold/20";
 const labelClass = "font-eyebrow text-[10px] uppercase tracking-[0.22em] text-deep-waters/65";
 
+function splitGoogleName(metadata: Record<string, unknown> | undefined) {
+  const givenName = typeof metadata?.given_name === "string" ? metadata.given_name : "";
+  const familyName = typeof metadata?.family_name === "string" ? metadata.family_name : "";
+
+  if (givenName || familyName) {
+    return { firstName: givenName, lastName: familyName };
+  }
+
+  const fullName = [metadata?.full_name, metadata?.name]
+    .find((value) => typeof value === "string" && value.trim().length > 0) as string | undefined;
+
+  if (!fullName) return { firstName: "", lastName: "" };
+
+  const parts = fullName.trim().split(/\s+/);
+  return {
+    firstName: parts[0] ?? "",
+    lastName: parts.slice(1).join(" "),
+  };
+}
+
 function JoinPage() {
   const [status, setStatus] = useState<"idle" | "saving" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
@@ -49,10 +69,18 @@ function JoinPage() {
     }
 
     supabase.auth.getUser().then(({ data }) => {
-      if (data?.user?.email) {
-        setSignedInEmail(data.user.email);
-        setForm((current) => ({ ...current, email: data.user.email ?? current.email }));
-      }
+      const user = data?.user;
+      if (!user?.email) return;
+
+      const { firstName, lastName } = splitGoogleName(user.user_metadata as Record<string, unknown> | undefined);
+
+      setSignedInEmail(user.email);
+      setForm((current) => ({
+        ...current,
+        email: user.email ?? current.email,
+        first_name: current.first_name || firstName,
+        last_name: current.last_name || lastName,
+      }));
     });
   }, []);
 
