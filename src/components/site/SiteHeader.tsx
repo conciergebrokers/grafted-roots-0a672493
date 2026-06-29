@@ -6,6 +6,9 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/s
 import { cn } from "@/lib/utils";
 import { Wordmark } from "@/components/site/Wordmark";
 
+const EVENTBRITE_URL =
+  "https://www.eventbrite.ca/e/grafted-faith-integrated-business-networking-tickets-1992099094016";
+
 const NAV = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
@@ -13,65 +16,56 @@ const NAV = [
   { to: "/contact", label: "Contact" },
 ] as const;
 
+const navLinkClass =
+  "rounded-full px-3.5 py-2 font-eyebrow text-[11px] uppercase tracking-[0.18em] text-deep-waters/65 transition-colors hover:bg-river-pale hover:text-deep-waters data-[status=active]:bg-river-pale data-[status=active]:text-deep-waters";
+
+const membershipLinkClass =
+  "inline-flex h-10 items-center rounded-full px-3.5 font-eyebrow text-[11px] uppercase tracking-[0.16em] text-deep-waters/70 transition-colors hover:bg-refined-gold/10 hover:text-deep-waters";
+
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5 md:px-8">
-        <div className="flex flex-1 items-center">
+    <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/85">
+      <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between gap-6 px-5 md:px-8">
+        <div className="flex min-w-0 items-center">
           <Wordmark />
         </div>
 
-        <nav className="hidden items-center gap-6 md:flex" aria-label="Primary">
-          {NAV.map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              className={cn(
-                "relative font-eyebrow text-xs uppercase tracking-[0.18em] text-foreground/70 transition-colors hover:text-deep-waters",
-                "after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-refined-gold after:transition-transform hover:after:scale-x-100",
-                "data-[status=active]:text-deep-waters data-[status=active]:after:scale-x-100",
-              )}
-              activeOptions={{ exact: item.to === "/" }}
-            >
-              {item.label}
+        <div className="hidden items-center justify-end gap-3 lg:flex">
+          <nav className="flex items-center gap-1" aria-label="Primary">
+            {NAV.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={cn(navLinkClass)}
+                activeOptions={{ exact: item.to === "/" }}
+              >
+                {item.label}
+              </Link>
+            ))}
+            <Link to="/contact" className={membershipLinkClass}>
+              Apply for Membership
             </Link>
-          ))}
-        </nav>
+          </nav>
 
-        <div className="hidden md:flex md:flex-1 md:items-center md:justify-end md:gap-4">
-          <Link
-            to="/contact"
-            className="font-eyebrow text-xs uppercase tracking-[0.18em] text-foreground/70 transition-colors hover:text-deep-waters"
-          >
-            Apply for Membership
-          </Link>
-          {/* TODO: re-enable when member auth is live
-          <Button asChild variant="ghost" className="font-eyebrow text-xs uppercase tracking-[0.18em]">
-            <Link to="/auth">Sign in</Link>
-          </Button>
-          */}
-          <span aria-hidden className="h-5 w-px bg-border" />
+          <span aria-hidden className="h-6 w-px bg-deep-waters/12" />
+
           <Button
             asChild
-            className="bg-deep-waters font-eyebrow text-xs uppercase tracking-[0.18em] text-river-sand hover:bg-still-pool"
+            className="h-10 rounded-md bg-deep-waters px-5 font-eyebrow text-[11px] uppercase tracking-[0.16em] text-river-sand shadow-none transition-colors hover:bg-still-pool"
           >
-            <a
-              href="https://www.eventbrite.ca/e/grafted-faith-integrated-business-networking-tickets-1992099094016"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href={EVENTBRITE_URL} target="_blank" rel="noopener noreferrer">
               Visit Grafted
             </a>
           </Button>
         </div>
 
-        <div className="md:hidden">
+        <div className="lg:hidden">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
               <button
                 aria-label="Open menu"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-md text-foreground hover:bg-secondary"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-md text-deep-waters transition-colors hover:bg-river-pale"
               >
                 <Menu className="h-5 w-5" />
               </button>
@@ -82,7 +76,7 @@ export function SiteHeader() {
                 <button
                   onClick={() => setOpen(false)}
                   aria-label="Close menu"
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-md hover:bg-secondary"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-md transition-colors hover:bg-river-pale"
                 >
                   <X className="h-5 w-5" />
                 </button>
@@ -93,7 +87,7 @@ export function SiteHeader() {
                     key={item.to}
                     to={item.to}
                     onClick={() => setOpen(false)}
-                    className="font-serif text-xl text-foreground py-2 border-b border-border/50"
+                    className="rounded-md border-b border-border/50 px-1 py-3 font-serif text-xl text-foreground transition-colors hover:bg-river-pale"
                   >
                     {item.label}
                   </Link>
@@ -105,11 +99,7 @@ export function SiteHeader() {
                   className="bg-deep-waters text-river-sand hover:bg-still-pool font-eyebrow text-xs uppercase tracking-[0.18em]"
                   onClick={() => setOpen(false)}
                 >
-                  <a
-                    href="https://www.eventbrite.ca/e/grafted-faith-integrated-business-networking-tickets-1992099094016"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                  <a href={EVENTBRITE_URL} target="_blank" rel="noopener noreferrer">
                     Visit Grafted
                   </a>
                 </Button>
@@ -121,16 +111,6 @@ export function SiteHeader() {
                 >
                   <Link to="/contact">Apply for Membership</Link>
                 </Button>
-                {/* TODO: re-enable when member auth is live
-                <Button
-                  asChild
-                  variant="outline"
-                  className="font-eyebrow text-xs uppercase tracking-[0.18em]"
-                  onClick={() => setOpen(false)}
-                >
-                  <Link to="/auth">Sign in</Link>
-                </Button>
-                */}
               </div>
             </SheetContent>
           </Sheet>
