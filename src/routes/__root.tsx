@@ -87,8 +87,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "Grafted is a faith-integrated business networking community in Edmonton for business owners seeking real referrals and practical growth." },
       { property: "og:description", content: "Grafted is a faith-integrated business networking community in Edmonton for business owners seeking real referrals and practical growth." },
       { name: "twitter:description", content: "Grafted is a faith-integrated business networking community in Edmonton for business owners seeking real referrals and practical growth." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b1ae15f5-c64e-48b0-84fc-e6a328937a3e/id-preview-ee6ab42a--67f7d448-aaf8-458b-a8ab-a2942359ac19.lovable.app-1779220022726.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b1ae15f5-c64e-48b0-84fc-e6a328937a3e/id-preview-ee6ab42a--67f7d448-aaf8-458b-a8ab-a2942359ac19.lovable.app-1779220022726.png" },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/cfbd61d6-61ea-4882-9d6e-8f89512fd77e" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/cfbd61d6-61ea-4882-9d6e-8f89512fd77e" },
     ],
     links: [
       {
