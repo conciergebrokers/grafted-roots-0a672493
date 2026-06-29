@@ -17,19 +17,20 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 md:px-8">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5 md:px-8">
         <div className="flex flex-1 items-center">
           <Wordmark />
         </div>
 
-        <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-6 md:flex" aria-label="Primary">
           {NAV.map((item) => (
             <Link
               key={item.to}
               to={item.to}
               className={cn(
-                "font-eyebrow text-xs uppercase tracking-[0.18em] text-foreground/70 transition-colors hover:text-foreground",
-                "data-[status=active]:text-foreground",
+                "relative font-eyebrow text-xs uppercase tracking-[0.18em] text-foreground/70 transition-colors hover:text-deep-waters",
+                "after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-refined-gold after:transition-transform hover:after:scale-x-100",
+                "data-[status=active]:text-deep-waters data-[status=active]:after:scale-x-100",
               )}
               activeOptions={{ exact: item.to === "/" }}
             >
@@ -38,13 +39,19 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="hidden md:flex md:flex-1 md:items-center md:justify-end md:gap-3">
-          <Button asChild variant="ghost" className="font-eyebrow text-xs uppercase tracking-[0.18em]">
-            <Link to="/contact">Apply for Membership</Link>
-          </Button>
+        <div className="hidden md:flex md:flex-1 md:items-center md:justify-end md:gap-4">
+          <Link
+            to="/contact"
+            className="font-eyebrow text-xs uppercase tracking-[0.18em] text-foreground/70 transition-colors hover:text-deep-waters"
+          >
+            Apply for Membership
+          </Link>
+          {/* TODO: re-enable when member auth is live
           <Button asChild variant="ghost" className="font-eyebrow text-xs uppercase tracking-[0.18em]">
             <Link to="/auth">Sign in</Link>
           </Button>
+          */}
+          <span aria-hidden className="h-5 w-px bg-border" />
           <Button
             asChild
             className="bg-deep-waters font-eyebrow text-xs uppercase tracking-[0.18em] text-river-sand hover:bg-still-pool"
@@ -114,6 +121,7 @@ export function SiteHeader() {
                 >
                   <Link to="/contact">Apply for Membership</Link>
                 </Button>
+                {/* TODO: re-enable when member auth is live
                 <Button
                   asChild
                   variant="outline"
@@ -122,6 +130,7 @@ export function SiteHeader() {
                 >
                   <Link to="/auth">Sign in</Link>
                 </Button>
+                */}
               </div>
             </SheetContent>
           </Sheet>

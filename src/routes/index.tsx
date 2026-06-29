@@ -17,7 +17,7 @@ import { Section } from "@/components/site/Section";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { PillarCard } from "@/components/site/PillarCard";
 import { MeetingSegmentCard } from "@/components/site/MeetingSegmentCard";
-import { PricingTierCard } from "@/components/site/PricingTierCard";
+import { MembershipPriceCard } from "@/components/site/MembershipPriceCard";
 import { CTASection } from "@/components/site/CTASection";
 import { Reveal } from "@/components/site/Reveal";
 import {
@@ -25,7 +25,6 @@ import {
   MEETING_INFO,
   MEETING_SEGMENTS,
   PILLARS,
-  PRICING_TIERS,
   SLIP_TYPES,
 } from "@/data/grafted";
 
@@ -273,38 +272,30 @@ function HomePage() {
         <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
           <Reveal>
             <SectionHeading eyebrow="Membership" number="05">
-              Accessible by design.
+              One simple price. Built to keep the room accessible.
             </SectionHeading>
             <p className="mt-6 text-lg text-deep-waters/80">
-              Grafted is built to welcome business owners at different stages.
-              Membership fees are tiered by business size so solo entrepreneurs
-              can enter accessibly and larger businesses can help carry the
-              community.
+              Membership is a flat $150 CAD per month, the same for every
+              business owner in the room. Billing happens on the 1st of each
+              month and is fully self-serve through Stripe.
             </p>
             <div className="mt-8 space-y-2 text-sm text-deep-waters/70">
               <p>
-                Members pay for their own lunch at each meeting.
+                Signups on or before June 30, 2026 pay nothing at signup. The
+                first full $150 is charged on July 1, 2026.
               </p>
               <p>
-                Twenty percent of membership fees is set aside for charitable
-                giving, with members voting on where those funds are directed.
+                Signups from July 1, 2026 onward pay a prorated amount for the
+                days until the next 1st, then $150 on the 1st each month.
               </p>
               <p>
-                Extenuating circumstances can be handled through a conversation.
+                Extenuating circumstances can be handled through a
+                conversation.
               </p>
             </div>
           </Reveal>
           <Reveal delay={0.05}>
-            <div className="space-y-3">
-              {PRICING_TIERS.map((t, i) => (
-                <PricingTierCard
-                  key={t.label}
-                  label={t.label}
-                  price={t.price}
-                  highlight={i === 0}
-                />
-              ))}
-            </div>
+            <MembershipPriceCard />
           </Reveal>
         </div>
       </Section>
