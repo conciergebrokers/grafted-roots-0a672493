@@ -4,7 +4,7 @@ import { BadgeCheck, CreditCard, LogOut, UserRound } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
 import { Section } from "@/components/site/Section";
 import { Button } from "@/components/ui/button";
-import { MEMBER_STORAGE_KEY, STRIPE_PLACEHOLDER_COPY } from "@/data/memberRegistration";
+import { MEMBER_STORAGE_KEY } from "@/data/memberRegistration";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/profile")({
@@ -55,6 +55,16 @@ function ProfilePage() {
   }, []);
 
   const displayName = [profile?.first_name, profile?.last_name].filter(Boolean).join(" ") || "Member profile";
+  const accountStatus = String(profile?.account_status || "pending_payment").toLowerCase();
+  const accountStatusLabel: Record<string, string> = {
+    active: "Active",
+    pending_payment: "Payment pending",
+    pending_profile: "Profile pending",
+    past_due: "Payment past due",
+    cancelled: "Inactive",
+    canceled: "Inactive",
+  };
+  const displayAccountStatus = accountStatusLabel[accountStatus] || "Payment pending";
 
   const signOut = async () => {
     await supabase.auth.signOut();
@@ -126,7 +136,7 @@ function ProfilePage() {
               <ProfileItem label="Business category" value={profile?.business_category} />
               <ProfileItem label="Service area" value={profile?.city_service_area} />
               <ProfileItem label="Website" value={profile?.website_url} />
-              <ProfileItem label="Account status" value={profile?.account_status || "pending_payment"} />
+              <ProfileItem label="Account status" value={displayAccountStatus} />
             </div>
             <div className="mt-8 space-y-5">
               <ProfileBlock label="One-line description" value={profile?.one_line_description} />
@@ -140,13 +150,12 @@ function ProfilePage() {
             </div>
           </div>
           <aside className="space-y-5">
-            <div className="rounded-2xl border border-refined-gold/35 bg-river-pale p-6">
-              <div className="flex items-center gap-3 font-serif text-xl text-deep-waters"><CreditCard className="h-5 w-5 text-refined-gold" /> Billing and receipts</div>
-              <p className="mt-3 text-sm leading-relaxed text-deep-waters/75">{STRIPE_PLACEHOLDER_COPY}</p>
-              <div className="mt-4 rounded-lg bg-background px-4 py-3 text-sm text-deep-waters/75">Current status: <strong>{profile?.payment_status || "pending"}</strong></div>
-              <Button type="button" onClick={openBillingPortal} disabled={billingLoading} className="mt-4 w-full bg-deep-waters text-river-sand hover:bg-still-pool font-eyebrow text-xs uppercase tracking-[0.18em]">{billingLoading ? "Opening..." : "Open Receipts"}</Button>
-              {billingError && <p className="mt-3 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{billingError}</p>}
-            </div>
+            <BillingCard
+              profile={profile}
+              billingLoading={billingLoading}
+              billingError={billingError}
+              onOpenBillingPortal={openBillingPortal}
+            />
             <div className="rounded-2xl border border-border bg-background p-6">
               <div className="flex items-center gap-3 font-serif text-xl text-deep-waters"><BadgeCheck className="h-5 w-5 text-refined-gold" /> Founding member</div>
               <p className="mt-3 text-sm leading-relaxed text-deep-waters/75">The first 15 paid signups receive founding member status after Stripe confirms payment.</p>
@@ -155,6 +164,114 @@ function ProfilePage() {
         </div>
       </Section>
     </>
+  );
+}
+
+type BillingState = "active" | "pending" | "past_due" | "cancelled";
+
+function resolveBillingState(profile: SavedProfile | null): BillingState {
+  const paymentStatus = String(profile?.payment_status || "").toLowerCase();
+  const accountStatus = String(profile?.account_status || "").toLowerCase();
+
+  if (paymentStatus === "paid") return "active";
+  if (paymentStatus === "failed") return "past_due";
+  if (paymentStatus === "cancelled" || paymentStatus === "canceled") return "cancelled";
+  if (paymentStatus === "checkout_started") return "pending";
+  if (accountStatus === "pending_payment" || accountStatus === "pending_profile") return "pending";
+  if (accountStatus === "past_due") return "past_due";
+  if (accountStatus === "cancelled" || accountStatus === "canceled") return "cancelled";
+  return "pending";
+}
+
+function BillingCard({
+  profile,
+  billingLoading,
+  billingError,
+  onOpenBillingPortal,
+}: {
+  profile: SavedProfile | null;
+  billingLoading: boolean;
+  billingError: string;
+  onOpenBillingPortal: () => void;
+}) {
+  const state = resolveBillingState(profile);
+  const hasStripeCustomer = Boolean(profile?.stripe_customer_id);
+
+  const content: Record<
+    BillingState,
+    { title: string; body: string; action: "receipts" | "billing" | "complete" | null }
+  > = {
+    active: {
+      title: "Membership active",
+      body: "Your Grafted membership is active. Receipts and billing details are managed securely through Stripe.",
+      action: hasStripeCustomer ? "receipts" : null,
+    },
+    pending: {
+      title: "Payment not complete",
+      body: "We have your profile details, but Stripe has not confirmed an active membership payment yet.",
+      action: "complete",
+    },
+    past_due: {
+      title: "Payment needs attention",
+      body: "Your membership payment needs attention. Please update your billing details through Stripe or contact Grafted.",
+      action: hasStripeCustomer ? "billing" : null,
+    },
+    cancelled: {
+      title: "Membership inactive",
+      body: "This membership is no longer active. Contact Grafted if you believe this is incorrect.",
+      action: null,
+    },
+  };
+
+  const { title, body, action } = content[state];
+
+  return (
+    <div className="rounded-2xl border border-refined-gold/35 bg-river-pale p-6">
+      <div className="flex items-center gap-3 font-serif text-xl text-deep-waters">
+        <CreditCard className="h-5 w-5 text-refined-gold" /> Billing and receipts
+      </div>
+      <p className="mt-3 text-sm leading-relaxed text-deep-waters/75">
+        Manage your Grafted membership billing and receipts securely through Stripe.
+      </p>
+      <div className="mt-4 rounded-lg bg-background px-4 py-3 text-sm text-deep-waters/75">
+        <strong>{title}</strong>
+        <p className="mt-1 text-deep-waters/70">{body}</p>
+      </div>
+      {action === "receipts" && (
+        <Button
+          type="button"
+          onClick={onOpenBillingPortal}
+          disabled={billingLoading}
+          className="mt-4 w-full bg-deep-waters text-river-sand hover:bg-still-pool font-eyebrow text-xs uppercase tracking-[0.18em]"
+        >
+          {billingLoading ? "Opening..." : "Open Receipts"}
+        </Button>
+      )}
+      {action === "billing" && (
+        <Button
+          type="button"
+          onClick={onOpenBillingPortal}
+          disabled={billingLoading}
+          className="mt-4 w-full bg-deep-waters text-river-sand hover:bg-still-pool font-eyebrow text-xs uppercase tracking-[0.18em]"
+        >
+          {billingLoading ? "Opening..." : "Open Billing"}
+        </Button>
+      )}
+      {action === "complete" && (
+        <Button
+          asChild
+          className="mt-4 w-full bg-deep-waters text-river-sand hover:bg-still-pool font-eyebrow text-xs uppercase tracking-[0.18em]"
+        >
+          <Link to="/join">Complete Membership Payment</Link>
+        </Button>
+      )}
+      {!action && hasStripeCustomer === false && (
+        <p className="mt-4 rounded-lg bg-background px-4 py-3 text-sm text-deep-waters/75">
+          Receipts will appear here once Stripe has linked billing to this member account.
+        </p>
+      )}
+      {billingError && <p className="mt-3 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{billingError}</p>}
+    </div>
   );
 }
 
