@@ -1,10 +1,11 @@
+import { Check } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { PRICING_TIERS } from "@/data/grafted";
+import { MEMBERSHIP_PRICING } from "@/data/membership";
 
 export function FAQAccordion({
   items,
