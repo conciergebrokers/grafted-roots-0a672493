@@ -1,10 +1,11 @@
+import { Check } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { PRICING_TIERS } from "@/data/grafted";
+import { MEMBERSHIP_PRICING } from "@/data/membership";
 
 export function FAQAccordion({
   items,
@@ -35,18 +36,28 @@ function FAQAnswer({ item }: { item: { q: string; a: string } }) {
   if (item.q === "What does membership cost?") {
     return (
       <div className="space-y-5">
-        <p>Membership is tiered by business size.</p>
-        <div className="grid gap-2 sm:grid-cols-2">
-          {PRICING_TIERS.map((tier) => (
-            <div
-              key={tier.label}
-              className="flex items-center justify-between gap-4 rounded-xl border border-border bg-river-sand px-4 py-3"
-            >
-              <span className="text-sm text-deep-waters/75">{tier.label}</span>
-              <span className="shrink-0 font-serif text-lg text-deep-waters">
-                ${tier.price}/mo
-              </span>
-            </div>
+        <div className="rounded-2xl border border-refined-gold/35 bg-background p-5 shadow-sm">
+          <div className="font-eyebrow text-[10px] uppercase tracking-[0.28em] text-refined-gold">
+            Membership
+          </div>
+          <div className="mt-3 font-display text-4xl leading-none text-deep-waters">
+            {MEMBERSHIP_PRICING.label}
+          </div>
+          <p className="mt-4 text-sm leading-relaxed text-deep-waters/75">
+            {MEMBERSHIP_PRICING.description}
+          </p>
+          <ul className="mt-5 space-y-3 text-sm text-deep-waters/80">
+            {MEMBERSHIP_PRICING.benefits.map((benefit) => (
+              <li key={benefit} className="flex items-start gap-3">
+                <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-refined-gold" strokeWidth={1.8} />
+                <span>{benefit}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="space-y-2 text-sm text-deep-waters/70">
+          {MEMBERSHIP_PRICING.notes.map((note) => (
+            <p key={note}>{note}</p>
           ))}
         </div>
       </div>
