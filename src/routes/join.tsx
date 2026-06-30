@@ -43,6 +43,7 @@ function JoinPage() {
   const [status, setStatus] = useState<"idle" | "saving" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [signedInEmail, setSignedInEmail] = useState<string | null>(null);
+  const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
   const [form, setForm] = useState<PendingMemberSignup>({
     first_name: "",
     last_name: "",
@@ -136,6 +137,7 @@ function JoinPage() {
     event.preventDefault();
     setStatus("saving");
     setErrorMessage("");
+    setCheckoutUrl(null);
 
     if (!form.public_directory_consent) {
       setStatus("error");
@@ -173,7 +175,14 @@ function JoinPage() {
       if (error) throw error;
       if (!checkoutData?.url) throw new Error("No Stripe checkout URL returned.");
 
-      window.location.href = checkoutData.url;
+      setCheckoutUrl(checkoutData.url);
+      // Open in a new tab as the primary path so popup blockers / redirect
+      // failures still leave the user with a clickable fallback link below.
+      const opened = window.open(checkoutData.url, "_blank", "noopener,noreferrer");
+      if (!opened) {
+        // Popup blocked — fall back to a same-tab navigation.
+        window.location.href = checkoutData.url;
+      }
     } catch (error) {
       console.error(error);
       setStatus("error");
