@@ -136,7 +136,7 @@ function ProfilePage() {
               <ProfileItem label="Business category" value={profile?.business_category} />
               <ProfileItem label="Service area" value={profile?.city_service_area} />
               <ProfileItem label="Website" value={profile?.website_url} />
-              <ProfileItem label="Account status" value={profile?.account_status || "pending_payment"} />
+              <ProfileItem label="Account status" value={displayAccountStatus} />
             </div>
             <div className="mt-8 space-y-5">
               <ProfileBlock label="One-line description" value={profile?.one_line_description} />
