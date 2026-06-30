@@ -181,7 +181,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: "What does membership cost?",
-    a: "Membership is tiered by business size. Solo or home-based: $100 per month. 1 to 3 employees: $150 per month. 3 to 5 employees: $200 per month. 5 to 10 employees: $250 per month. 10 to 20 employees: $350 per month. 20 or more employees: $500 per month. Twenty percent of membership fees is set aside for charitable giving, with members voting on where those funds are directed.",
+    a: "Membership is $150 CAD per month. One simple monthly membership keeps the room accessible, sustainable, and easy to understand. No GST is charged at this time. Lunch is not included. Members pay for their own lunch at each meeting. The first 15 paid signups receive founding member status.",
   },
   {
     q: "Are meals included?",
