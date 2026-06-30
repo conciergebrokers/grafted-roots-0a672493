@@ -74,6 +74,26 @@ serve(async (req) => {
     const serviceClient = createClient(supabaseUrl, supabaseServiceRoleKey);
     const stripe = new Stripe(stripeSecretKey, { httpClient: Stripe.createFetchHttpClient() });
 
+    // Guard: never downgrade an existing paid member row.
+    const { data: existingProfile } = await serviceClient
+      .from("member_profiles")
+      .select("id, payment_status, stripe_subscription_id, profile_complete")
+      .eq("email", checkoutEmail)
+      .maybeSingle();
+
+    if (
+      existingProfile &&
+      (existingProfile.payment_status === "paid" || !!existingProfile.stripe_subscription_id)
+    ) {
+      const redirectPath = existingProfile.profile_complete ? "/profile" : "/complete-profile";
+      return jsonResponse({
+        already_active: true,
+        redirect: redirectPath,
+        url: `${siteUrl.replace(/\/$/, "")}${redirectPath}`,
+        message: "This email already has an active Grafted membership.",
+      });
+    }
+
     const memberPayload: Record<string, unknown> = {
       first_name: body.first_name ?? "",
       last_name: body.last_name ?? "",
