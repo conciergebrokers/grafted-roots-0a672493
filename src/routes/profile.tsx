@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { BadgeCheck, CreditCard, UserRound } from "lucide-react";
+import { BadgeCheck, CreditCard, LogOut, UserRound } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
 import { Section } from "@/components/site/Section";
 import { Button } from "@/components/ui/button";
@@ -19,23 +19,35 @@ type SavedProfile = Record<string, any>;
 
 function ProfilePage() {
   const [profile, setProfile] = useState<SavedProfile | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [signedIn, setSignedIn] = useState(false);
+  const [billingLoading, setBillingLoading] = useState(false);
+  const [billingError, setBillingError] = useState("");
 
   useEffect(() => {
     const load = async () => {
-      const raw = localStorage.getItem(MEMBER_STORAGE_KEY);
-      if (raw) {
-        try { setProfile(JSON.parse(raw)); } catch { setProfile(null); }
-      }
-
+      setLoading(true);
       try {
         const supabaseAny = supabase as any;
         const { data: userResult } = await supabase.auth.getUser();
         const email = userResult?.user?.email;
-        if (!email) return;
+        if (!email) {
+          setSignedIn(false);
+          setProfile(null);
+          return;
+        }
+        setSignedIn(true);
         const { data } = await supabaseAny.from("member_profiles").select("*").eq("email", email).maybeSingle();
-        if (data) setProfile(data);
+        if (data) {
+          setProfile(data);
+          localStorage.setItem(MEMBER_STORAGE_KEY, JSON.stringify(data));
+        } else {
+          setProfile({ email });
+        }
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -44,9 +56,59 @@ function ProfilePage() {
 
   const displayName = [profile?.first_name, profile?.last_name].filter(Boolean).join(" ") || "Member profile";
 
+  const signOut = async () => {
+    await supabase.auth.signOut();
+    localStorage.removeItem(MEMBER_STORAGE_KEY);
+    setSignedIn(false);
+    setProfile(null);
+  };
+
+  const openBillingPortal = async () => {
+    setBillingError("");
+    setBillingLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("create-customer-portal-session", {
+        body: { return_url: `${window.location.origin}/profile` },
+      });
+      if (error) throw error;
+      if (!data?.url) throw new Error("No billing portal URL returned.");
+      window.location.href = data.url;
+    } catch (error) {
+      console.error(error);
+      setBillingError("Receipts could not be opened yet. Confirm this member has a Stripe customer ID and the Stripe customer portal is configured.");
+    } finally {
+      setBillingLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <>
+        <PageHero eyebrow="Member Portal" title="Loading your member portal." subtitle="Checking your sign-in session." />
+        <Section tone="sand"><div className="mx-auto max-w-2xl rounded-2xl border border-border bg-background p-8 text-center">Loading...</div></Section>
+      </>
+    );
+  }
+
+  if (!signedIn) {
+    return (
+      <>
+        <PageHero eyebrow="Member Portal" title="Sign in to access your member portal." subtitle="Use Google or a secure email link to view your profile and billing receipts." />
+        <Section tone="sand">
+          <div className="mx-auto max-w-2xl rounded-2xl border border-border bg-background p-8 text-center shadow-sm">
+            <UserRound className="mx-auto h-10 w-10 text-refined-gold" />
+            <h2 className="mt-4 font-display text-3xl text-deep-waters">Member sign-in required</h2>
+            <p className="mt-3 text-deep-waters/75">Use the same email connected to your Grafted membership.</p>
+            <Button asChild className="mt-6 bg-deep-waters text-river-sand hover:bg-still-pool font-eyebrow text-xs uppercase tracking-[0.2em]"><Link to="/auth">Sign In</Link></Button>
+          </div>
+        </Section>
+      </>
+    );
+  }
+
   return (
     <>
-      <PageHero eyebrow="Member Profile" title="Your Grafted profile." subtitle="This is the first version of the member profile. Billing, directory access, and richer member tools will connect as Stripe and the portal come online." />
+      <PageHero eyebrow="Member Profile" title="Your Grafted profile." subtitle="Access your profile details and billing receipts." />
       <Section tone="sand">
         <div className="mx-auto grid max-w-5xl gap-6 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="rounded-2xl border border-border bg-background p-6 shadow-sm md:p-8">
@@ -74,13 +136,16 @@ function ProfilePage() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild className="bg-deep-waters text-river-sand hover:bg-still-pool font-eyebrow text-xs uppercase tracking-[0.2em]"><Link to="/complete-profile">Edit Profile</Link></Button>
               <Button asChild variant="outline"><Link to="/">Back to Home</Link></Button>
+              <Button type="button" variant="outline" onClick={signOut} className="font-eyebrow text-xs uppercase tracking-[0.18em]"><LogOut className="mr-2 h-4 w-4" />Sign Out</Button>
             </div>
           </div>
           <aside className="space-y-5">
             <div className="rounded-2xl border border-refined-gold/35 bg-river-pale p-6">
-              <div className="flex items-center gap-3 font-serif text-xl text-deep-waters"><CreditCard className="h-5 w-5 text-refined-gold" /> Billing status</div>
+              <div className="flex items-center gap-3 font-serif text-xl text-deep-waters"><CreditCard className="h-5 w-5 text-refined-gold" /> Billing and receipts</div>
               <p className="mt-3 text-sm leading-relaxed text-deep-waters/75">{STRIPE_PLACEHOLDER_COPY}</p>
               <div className="mt-4 rounded-lg bg-background px-4 py-3 text-sm text-deep-waters/75">Current status: <strong>{profile?.payment_status || "pending"}</strong></div>
+              <Button type="button" onClick={openBillingPortal} disabled={billingLoading} className="mt-4 w-full bg-deep-waters text-river-sand hover:bg-still-pool font-eyebrow text-xs uppercase tracking-[0.18em]">{billingLoading ? "Opening..." : "Open Receipts"}</Button>
+              {billingError && <p className="mt-3 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{billingError}</p>}
             </div>
             <div className="rounded-2xl border border-border bg-background p-6">
               <div className="flex items-center gap-3 font-serif text-xl text-deep-waters"><BadgeCheck className="h-5 w-5 text-refined-gold" /> Founding member</div>
