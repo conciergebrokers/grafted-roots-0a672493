@@ -78,12 +78,26 @@ function CompleteProfilePage() {
 
         const { data: existingProfile } = await supabaseAny
           .from("member_profiles")
-          .select("email, payment_status")
+          .select("*")
           .eq("email", email)
           .maybeSingle();
 
-        if (existingProfile?.payment_status) {
-          setPaymentStatus(existingProfile.payment_status);
+        if (existingProfile) {
+          if (existingProfile.payment_status) setPaymentStatus(existingProfile.payment_status);
+          setForm((current) => {
+            const next: ProfileForm = { ...current, email };
+            for (const key of Object.keys(current) as Array<keyof ProfileForm>) {
+              const value = existingProfile[key as string];
+              if (value === null || value === undefined) continue;
+              // Preserve booleans; coerce numbers to string for the input.
+              if (typeof current[key] === "boolean") {
+                (next as any)[key] = Boolean(value);
+              } else {
+                (next as any)[key] = typeof value === "string" ? value : String(value);
+              }
+            }
+            return next;
+          });
         }
       } catch (error) {
         console.error(error);
