@@ -107,6 +107,31 @@ function JoinPage() {
     }
   };
 
+  const signOut = async () => {
+    setErrorMessage("");
+    setStatus("idle");
+
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+
+      localStorage.removeItem(MEMBER_STORAGE_KEY);
+      setSignedInEmail(null);
+      setForm({
+        first_name: "",
+        last_name: "",
+        business_name: "",
+        email: "",
+        mobile_phone: "",
+        public_directory_consent: false,
+      });
+    } catch (error) {
+      console.error(error);
+      setStatus("error");
+      setErrorMessage("Sign out could not be completed. Please refresh the page and try again.");
+    }
+  };
+
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setStatus("saving");
@@ -164,9 +189,19 @@ function JoinPage() {
             <h2 className="font-display text-4xl text-deep-waters">Create your member account.</h2>
             <p className="mt-3 text-deep-waters/75">Use Google sign in first, enter your member details, then continue to payment.</p>
 
-            <Button type="button" onClick={continueWithGoogle} variant="outline" className="mt-6 w-full font-eyebrow text-xs uppercase tracking-[0.18em]">
-              {signedInEmail ? `Signed in as ${signedInEmail}` : "Continue with Google"}
-            </Button>
+            {signedInEmail ? (
+              <div className="mt-6 rounded-xl border border-deep-waters/10 bg-river-pale p-4">
+                <p className="font-eyebrow text-[10px] uppercase tracking-[0.22em] text-deep-waters/60">Signed in with Google</p>
+                <p className="mt-1 text-sm font-medium text-deep-waters">{signedInEmail}</p>
+                <Button type="button" onClick={signOut} variant="outline" className="mt-4 w-full font-eyebrow text-xs uppercase tracking-[0.18em]">
+                  Sign out and use another account
+                </Button>
+              </div>
+            ) : (
+              <Button type="button" onClick={continueWithGoogle} variant="outline" className="mt-6 w-full font-eyebrow text-xs uppercase tracking-[0.18em]">
+                Continue with Google
+              </Button>
+            )}
 
             <div className="mt-8 grid gap-5 md:grid-cols-2">
               <label><span className={labelClass}>First name</span><input required className={fieldClass} value={form.first_name} onChange={(e) => update("first_name", e.target.value)} /></label>
