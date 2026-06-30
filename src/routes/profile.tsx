@@ -157,6 +157,114 @@ function ProfilePage() {
   );
 }
 
+type BillingState = "active" | "pending" | "past_due" | "cancelled";
+
+function resolveBillingState(profile: SavedProfile | null): BillingState {
+  const paymentStatus = String(profile?.payment_status || "").toLowerCase();
+  const accountStatus = String(profile?.account_status || "").toLowerCase();
+
+  if (paymentStatus === "paid") return "active";
+  if (paymentStatus === "failed") return "past_due";
+  if (paymentStatus === "cancelled" || paymentStatus === "canceled") return "cancelled";
+  if (paymentStatus === "checkout_started") return "pending";
+  if (accountStatus === "pending_payment" || accountStatus === "pending_profile") return "pending";
+  if (accountStatus === "past_due") return "past_due";
+  if (accountStatus === "cancelled" || accountStatus === "canceled") return "cancelled";
+  return "pending";
+}
+
+function BillingCard({
+  profile,
+  billingLoading,
+  billingError,
+  onOpenBillingPortal,
+}: {
+  profile: SavedProfile | null;
+  billingLoading: boolean;
+  billingError: string;
+  onOpenBillingPortal: () => void;
+}) {
+  const state = resolveBillingState(profile);
+  const hasStripeCustomer = Boolean(profile?.stripe_customer_id);
+
+  const content: Record<
+    BillingState,
+    { title: string; body: string; action: "receipts" | "billing" | "complete" | null }
+  > = {
+    active: {
+      title: "Membership active",
+      body: "Your Grafted membership is active. Receipts and billing details are managed securely through Stripe.",
+      action: hasStripeCustomer ? "receipts" : null,
+    },
+    pending: {
+      title: "Payment not complete",
+      body: "We have your profile details, but Stripe has not confirmed an active membership payment yet.",
+      action: "complete",
+    },
+    past_due: {
+      title: "Payment needs attention",
+      body: "Your membership payment needs attention. Please update your billing details through Stripe or contact Grafted.",
+      action: hasStripeCustomer ? "billing" : null,
+    },
+    cancelled: {
+      title: "Membership inactive",
+      body: "This membership is no longer active. Contact Grafted if you believe this is incorrect.",
+      action: null,
+    },
+  };
+
+  const { title, body, action } = content[state];
+
+  return (
+    <div className="rounded-2xl border border-refined-gold/35 bg-river-pale p-6">
+      <div className="flex items-center gap-3 font-serif text-xl text-deep-waters">
+        <CreditCard className="h-5 w-5 text-refined-gold" /> Billing and receipts
+      </div>
+      <p className="mt-3 text-sm leading-relaxed text-deep-waters/75">
+        Manage your Grafted membership billing and receipts securely through Stripe.
+      </p>
+      <div className="mt-4 rounded-lg bg-background px-4 py-3 text-sm text-deep-waters/75">
+        <strong>{title}</strong>
+        <p className="mt-1 text-deep-waters/70">{body}</p>
+      </div>
+      {action === "receipts" && (
+        <Button
+          type="button"
+          onClick={onOpenBillingPortal}
+          disabled={billingLoading}
+          className="mt-4 w-full bg-deep-waters text-river-sand hover:bg-still-pool font-eyebrow text-xs uppercase tracking-[0.18em]"
+        >
+          {billingLoading ? "Opening..." : "Open Receipts"}
+        </Button>
+      )}
+      {action === "billing" && (
+        <Button
+          type="button"
+          onClick={onOpenBillingPortal}
+          disabled={billingLoading}
+          className="mt-4 w-full bg-deep-waters text-river-sand hover:bg-still-pool font-eyebrow text-xs uppercase tracking-[0.18em]"
+        >
+          {billingLoading ? "Opening..." : "Open Billing"}
+        </Button>
+      )}
+      {action === "complete" && (
+        <Button
+          asChild
+          className="mt-4 w-full bg-deep-waters text-river-sand hover:bg-still-pool font-eyebrow text-xs uppercase tracking-[0.18em]"
+        >
+          <Link to="/join">Complete Membership Payment</Link>
+        </Button>
+      )}
+      {!action && hasStripeCustomer === false && (
+        <p className="mt-4 rounded-lg bg-background px-4 py-3 text-sm text-deep-waters/75">
+          Receipts will appear here once Stripe has linked billing to this member account.
+        </p>
+      )}
+      {billingError && <p className="mt-3 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{billingError}</p>}
+    </div>
+  );
+}
+
 function ProfileItem({ label, value }: { label: string; value?: string | number | null }) {
   return <div className="rounded-xl border border-deep-waters/10 bg-river-pale p-4"><div className="font-eyebrow text-[10px] uppercase tracking-[0.22em] text-deep-waters/50">{label}</div><div className="mt-2 text-sm text-deep-waters/80">{value || "Not added yet"}</div></div>;
 }
