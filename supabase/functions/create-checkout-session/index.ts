@@ -33,10 +33,18 @@ serve(async (req) => {
     const stripePriceId = Deno.env.get("STRIPE_PRICE_ID");
     const siteUrl = Deno.env.get("PUBLIC_SITE_URL") ?? "https://graftedexchange.ca";
     const supabaseUrl = Deno.env.get("SUPABASE_URL");
-    const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY");
+    const supabaseAnonKey =
+      Deno.env.get("SUPABASE_PUBLISHABLE_KEY") ?? Deno.env.get("SUPABASE_ANON_KEY");
     const supabaseServiceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
 
     if (!stripeSecretKey || !stripePriceId || !supabaseUrl || !supabaseAnonKey || !supabaseServiceRoleKey) {
+      console.error("Missing required server configuration", {
+        hasStripeKey: !!stripeSecretKey,
+        hasStripePrice: !!stripePriceId,
+        hasSupabaseUrl: !!supabaseUrl,
+        hasSupabaseAnonOrPublishable: !!supabaseAnonKey,
+        hasServiceRole: !!supabaseServiceRoleKey,
+      });
       return jsonResponse({ error: "Missing required server configuration." }, 500);
     }
 
@@ -112,7 +120,8 @@ serve(async (req) => {
     if (!session.url) return jsonResponse({ error: "Stripe did not return a checkout URL." }, 500);
     return jsonResponse({ url: session.url });
   } catch (error) {
-    console.error("create-checkout-session error", error);
-    return jsonResponse({ error: "Could not create Stripe checkout session." }, 500);
+    const message = error instanceof Error ? error.message : String(error);
+    console.error("create-checkout-session error", message, error);
+    return jsonResponse({ error: "Could not create Stripe checkout session.", detail: message }, 500);
   }
 });
