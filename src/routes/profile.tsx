@@ -55,6 +55,16 @@ function ProfilePage() {
   }, []);
 
   const displayName = [profile?.first_name, profile?.last_name].filter(Boolean).join(" ") || "Member profile";
+  const accountStatus = String(profile?.account_status || "pending_payment").toLowerCase();
+  const accountStatusLabel: Record<string, string> = {
+    active: "Active",
+    pending_payment: "Payment pending",
+    pending_profile: "Profile pending",
+    past_due: "Payment past due",
+    cancelled: "Inactive",
+    canceled: "Inactive",
+  };
+  const displayAccountStatus = accountStatusLabel[accountStatus] || "Payment pending";
 
   const signOut = async () => {
     await supabase.auth.signOut();
