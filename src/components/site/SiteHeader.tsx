@@ -50,6 +50,14 @@ export function SiteHeader() {
 
           <Button
             asChild
+            variant="outline"
+            className="h-10 rounded-md px-4 font-eyebrow text-[11px] uppercase tracking-[0.16em]"
+          >
+            <Link to="/auth">Member Sign In</Link>
+          </Button>
+
+          <Button
+            asChild
             className="h-10 rounded-md bg-deep-waters px-5 font-eyebrow text-[11px] uppercase tracking-[0.16em] text-river-sand shadow-none transition-colors hover:bg-still-pool"
           >
             <a href={EVENTBRITE_URL} target="_blank" rel="noopener noreferrer">
@@ -109,6 +117,14 @@ export function SiteHeader() {
                   onClick={() => setOpen(false)}
                 >
                   <Link to="/join">Apply for Membership</Link>
+                </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  className="font-eyebrow text-xs uppercase tracking-[0.18em]"
+                  onClick={() => setOpen(false)}
+                >
+                  <Link to="/auth">Member Sign In</Link>
                 </Button>
               </div>
             </SheetContent>
