@@ -223,6 +223,20 @@ function JoinPage() {
 
             <label className="mt-6 flex gap-3 rounded-xl border border-deep-waters/10 bg-river-pale p-4 text-sm text-deep-waters/80"><input type="checkbox" className="mt-1" checked={form.public_directory_consent} onChange={(e) => update("public_directory_consent", e.target.checked)} /><span>I consent to being listed in the Grafted member directory once my profile is complete.</span></label>
             {errorMessage && <p className="mt-4 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{errorMessage}</p>}
+            {checkoutUrl && (
+              <p className="mt-4 rounded-lg bg-river-pale px-4 py-3 text-sm text-deep-waters">
+                Checkout is ready. If it does not open automatically,{" "}
+                <a
+                  href={checkoutUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-refined-gold underline underline-offset-4"
+                >
+                  click here to open Stripe Checkout
+                </a>
+                .
+              </p>
+            )}
 
             <Button disabled={status === "saving"} className="mt-6 bg-deep-waters text-river-sand hover:bg-still-pool font-eyebrow text-xs uppercase tracking-[0.2em]">
               {status === "saving" ? "Preparing Checkout..." : "Continue to Payment"}<ArrowRight className="ml-2 h-4 w-4" />
