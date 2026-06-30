@@ -4,7 +4,7 @@ import { BadgeCheck, CreditCard, LogOut, UserRound } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
 import { Section } from "@/components/site/Section";
 import { Button } from "@/components/ui/button";
-import { MEMBER_STORAGE_KEY, STRIPE_PLACEHOLDER_COPY } from "@/data/memberRegistration";
+import { MEMBER_STORAGE_KEY } from "@/data/memberRegistration";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/profile")({
