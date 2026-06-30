@@ -111,7 +111,12 @@ serve(async (req) => {
 
     const updatePayload: Record<string, unknown> = {};
     for (const field of EDITABLE_FIELDS) {
-      if (field in body) updatePayload[field] = body[field];
+      if (!(field in body)) continue;
+      const value = body[field];
+      // Skip empty strings so a partial edit form doesn't wipe previously
+      // saved fields. Booleans, numbers, and explicit nulls are preserved.
+      if (typeof value === "string" && value.trim() === "") continue;
+      updatePayload[field] = value;
     }
 
     if (updatePayload.number_of_employees !== undefined && updatePayload.number_of_employees !== null && updatePayload.number_of_employees !== "") {
