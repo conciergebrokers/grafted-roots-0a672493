@@ -103,7 +103,7 @@ function JoinPage() {
     } catch (error) {
       console.error(error);
       setStatus("error");
-      setErrorMessage("Google sign in could not be started. Confirm Google OAuth is enabled in Supabase/Lovable, then try again.");
+      setErrorMessage("Google sign in could not be started. You can still complete the form manually and continue to payment.");
     }
   };
 
@@ -146,16 +146,17 @@ function JoinPage() {
     try {
       const { data } = await supabase.auth.getUser();
       const user = data?.user;
+      const checkoutEmail = (user?.email ?? form.email).trim();
 
-      if (!user) {
+      if (!checkoutEmail) {
         setStatus("error");
-        setErrorMessage("Please continue with Google before payment so Stripe can connect your membership to your account.");
+        setErrorMessage("Please enter an email address before continuing to payment.");
         return;
       }
 
       const payload = {
         ...form,
-        email: user.email ?? form.email,
+        email: checkoutEmail,
         account_status: "pending_payment",
         payment_status: "checkout_started",
         profile_complete: false,
@@ -187,7 +188,7 @@ function JoinPage() {
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
           <form onSubmit={submit} className="rounded-2xl border border-border bg-background p-6 shadow-sm md:p-8">
             <h2 className="font-display text-4xl text-deep-waters">Create your member account.</h2>
-            <p className="mt-3 text-deep-waters/75">Use Google sign in first, enter your member details, then continue to payment.</p>
+            <p className="mt-3 text-deep-waters/75">Use Google to prefill your details, or enter them manually and continue to payment.</p>
 
             {signedInEmail ? (
               <div className="mt-6 rounded-xl border border-deep-waters/10 bg-river-pale p-4">
@@ -199,7 +200,7 @@ function JoinPage() {
               </div>
             ) : (
               <Button type="button" onClick={continueWithGoogle} variant="outline" className="mt-6 w-full font-eyebrow text-xs uppercase tracking-[0.18em]">
-                Continue with Google
+                Continue with Google <span className="ml-1 text-deep-waters/50">Optional</span>
               </Button>
             )}
 
