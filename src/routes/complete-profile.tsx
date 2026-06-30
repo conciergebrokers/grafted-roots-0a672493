@@ -111,27 +111,38 @@ function CompleteProfilePage() {
         return;
       }
 
-      const { data: existingProfile } = await supabaseAny
-        .from("member_profiles")
-        .select("payment_status, account_status")
-        .eq("email", email)
-        .maybeSingle();
-
-      const currentPaymentStatus = existingProfile?.payment_status ?? paymentStatus ?? "pending";
-      const accountStatus = accountStatusForPayment(currentPaymentStatus);
-
       const payload = {
         ...form,
         email,
-        user_id: data?.user?.id ?? null,
         number_of_employees: form.number_of_employees ? Number(form.number_of_employees) : null,
-        profile_complete: true,
-        account_status: accountStatus,
-        updated_at: new Date().toISOString(),
       };
 
-      await supabaseAny.from("member_profiles").upsert(payload, { onConflict: "email" });
-      localStorage.setItem(MEMBER_STORAGE_KEY, JSON.stringify({ ...payload, payment_status: currentPaymentStatus }));
+      const { data: sessionData } = await supabase.auth.getSession();
+      const accessToken = sessionData?.session?.access_token;
+
+      const { data: invokeData, error: invokeError } = await supabase.functions.invoke(
+        "complete-member-profile",
+        {
+          body: payload,
+          headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : undefined,
+        },
+      );
+
+      if (invokeError || (invokeData && (invokeData as any).error)) {
+        const message =
+          (invokeData as any)?.error ||
+          invokeError?.message ||
+          "Your profile could not be saved. Please try again, or contact Grafted if the issue continues.";
+        setStatus("idle");
+        setErrorMessage(message);
+        return;
+      }
+
+      const accountStatus = (invokeData as any)?.account_status ?? accountStatusForPayment(paymentStatus);
+      localStorage.setItem(
+        MEMBER_STORAGE_KEY,
+        JSON.stringify({ ...payload, account_status: accountStatus, profile_complete: true, payment_status: paymentStatus }),
+      );
       navigate({ to: "/profile" });
     } catch (error) {
       console.error(error);
