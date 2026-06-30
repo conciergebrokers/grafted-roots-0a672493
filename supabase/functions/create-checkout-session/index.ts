@@ -48,28 +48,37 @@ serve(async (req) => {
       return jsonResponse({ error: "Missing required server configuration." }, 500);
     }
 
-    const authorization = req.headers.get("Authorization");
-    if (!authorization) return jsonResponse({ error: "Please sign in before continuing to payment." }, 401);
-
-    const authClient = createClient(supabaseUrl, supabaseAnonKey, { global: { headers: { Authorization: authorization } } });
-    const { data: userResult, error: userError } = await authClient.auth.getUser();
-    if (userError || !userResult?.user) return jsonResponse({ error: "Please sign in before continuing to payment." }, 401);
-
     const body = (await req.json()) as CheckoutRequest;
-    const user = userResult.user;
-    const email = user.email ?? body.email;
+    const email = body.email?.trim().toLowerCase();
+
     if (!email) return jsonResponse({ error: "A member email is required before checkout." }, 400);
     if (!body.public_directory_consent) return jsonResponse({ error: "Public directory consent is required before checkout." }, 400);
 
+    const authorization = req.headers.get("Authorization");
+    let userId: string | null = null;
+    let authEmail: string | null = null;
+
+    if (authorization) {
+      const authClient = createClient(supabaseUrl, supabaseAnonKey, { global: { headers: { Authorization: authorization } } });
+      const { data: userResult, error: userError } = await authClient.auth.getUser();
+
+      if (!userError && userResult?.user) {
+        userId = userResult.user.id;
+        authEmail = userResult.user.email ?? null;
+      } else {
+        console.warn("Checkout continued without a valid Supabase user session", userError?.message);
+      }
+    }
+
+    const checkoutEmail = (authEmail ?? email).trim().toLowerCase();
     const serviceClient = createClient(supabaseUrl, supabaseServiceRoleKey);
     const stripe = new Stripe(stripeSecretKey, { httpClient: Stripe.createFetchHttpClient() });
 
-    const memberPayload = {
-      user_id: user.id,
+    const memberPayload: Record<string, unknown> = {
       first_name: body.first_name ?? "",
       last_name: body.last_name ?? "",
       business_name: body.business_name ?? "",
-      email,
+      email: checkoutEmail,
       mobile_phone: body.mobile_phone ?? "",
       public_directory_consent: true,
       account_status: "pending_payment",
@@ -79,6 +88,8 @@ serve(async (req) => {
       signup_date: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     };
+
+    if (userId) memberPayload.user_id = userId;
 
     const { data: memberProfile, error: profileError } = await serviceClient
       .from("member_profiles")
@@ -93,19 +104,24 @@ serve(async (req) => {
 
     const displayName = [memberProfile.first_name, memberProfile.last_name].filter(Boolean).join(" ");
     let stripeCustomerId = memberProfile.stripe_customer_id as string | null;
+    const stripeMetadata = {
+      user_id: userId ?? "",
+      member_profile_id: memberProfile.id,
+      business_name: memberProfile.business_name || "",
+    };
 
     if (!stripeCustomerId) {
       const customer = await stripe.customers.create({
-        email,
+        email: checkoutEmail,
         name: displayName || memberProfile.business_name || undefined,
         phone: memberProfile.mobile_phone || undefined,
-        metadata: { user_id: user.id, member_profile_id: memberProfile.id, business_name: memberProfile.business_name || "" },
+        metadata: stripeMetadata,
       });
       stripeCustomerId = customer.id;
       await serviceClient.from("member_profiles").update({ stripe_customer_id: stripeCustomerId, updated_at: new Date().toISOString() }).eq("id", memberProfile.id);
     }
 
-    const metadata = { user_id: user.id, member_profile_id: memberProfile.id, email };
+    const metadata = { user_id: userId ?? "", member_profile_id: memberProfile.id, email: checkoutEmail };
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
       customer: stripeCustomerId,
