@@ -101,6 +101,117 @@ export type Database = {
         }
         Relationships: []
       }
+      member_profiles: {
+        Row: {
+          account_status: string
+          annual_revenue: string | null
+          business_category: string | null
+          business_category_other: string | null
+          business_name: string | null
+          city_service_area: string | null
+          city_service_area_visibility: string
+          created_at: string
+          email: string
+          first_name: string | null
+          founding_member: boolean
+          headshot_url: string | null
+          headshot_visibility: string
+          id: string
+          ideal_referral: string | null
+          last_name: string | null
+          logo_url: string | null
+          mobile_phone: string | null
+          number_of_employees: number | null
+          one_line_description: string | null
+          payment_status: string
+          profile_complete: boolean
+          public_directory_consent: boolean
+          salesperson_own_book: boolean
+          signup_date: string
+          social_links: string | null
+          stage_of_business: string | null
+          stripe_customer_id: string | null
+          stripe_subscription_id: string | null
+          updated_at: string
+          user_id: string | null
+          website_url: string | null
+          what_drew_you_to_grafted: string | null
+          what_i_do_differently: string | null
+        }
+        Insert: {
+          account_status?: string
+          annual_revenue?: string | null
+          business_category?: string | null
+          business_category_other?: string | null
+          business_name?: string | null
+          city_service_area?: string | null
+          city_service_area_visibility?: string
+          created_at?: string
+          email: string
+          first_name?: string | null
+          founding_member?: boolean
+          headshot_url?: string | null
+          headshot_visibility?: string
+          id?: string
+          ideal_referral?: string | null
+          last_name?: string | null
+          logo_url?: string | null
+          mobile_phone?: string | null
+          number_of_employees?: number | null
+          one_line_description?: string | null
+          payment_status?: string
+          profile_complete?: boolean
+          public_directory_consent?: boolean
+          salesperson_own_book?: boolean
+          signup_date?: string
+          social_links?: string | null
+          stage_of_business?: string | null
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          updated_at?: string
+          user_id?: string | null
+          website_url?: string | null
+          what_drew_you_to_grafted?: string | null
+          what_i_do_differently?: string | null
+        }
+        Update: {
+          account_status?: string
+          annual_revenue?: string | null
+          business_category?: string | null
+          business_category_other?: string | null
+          business_name?: string | null
+          city_service_area?: string | null
+          city_service_area_visibility?: string
+          created_at?: string
+          email?: string
+          first_name?: string | null
+          founding_member?: boolean
+          headshot_url?: string | null
+          headshot_visibility?: string
+          id?: string
+          ideal_referral?: string | null
+          last_name?: string | null
+          logo_url?: string | null
+          mobile_phone?: string | null
+          number_of_employees?: number | null
+          one_line_description?: string | null
+          payment_status?: string
+          profile_complete?: boolean
+          public_directory_consent?: boolean
+          salesperson_own_book?: boolean
+          signup_date?: string
+          social_links?: string | null
+          stage_of_business?: string | null
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          updated_at?: string
+          user_id?: string | null
+          website_url?: string | null
+          what_drew_you_to_grafted?: string | null
+          what_i_do_differently?: string | null
+        }
+        Relationships: []
+      }
       membership_applications: {
         Row: {
           business_name: string
