@@ -140,13 +140,12 @@ function ProfilePage() {
             </div>
           </div>
           <aside className="space-y-5">
-            <div className="rounded-2xl border border-refined-gold/35 bg-river-pale p-6">
-              <div className="flex items-center gap-3 font-serif text-xl text-deep-waters"><CreditCard className="h-5 w-5 text-refined-gold" /> Billing and receipts</div>
-              <p className="mt-3 text-sm leading-relaxed text-deep-waters/75">{STRIPE_PLACEHOLDER_COPY}</p>
-              <div className="mt-4 rounded-lg bg-background px-4 py-3 text-sm text-deep-waters/75">Current status: <strong>{profile?.payment_status || "pending"}</strong></div>
-              <Button type="button" onClick={openBillingPortal} disabled={billingLoading} className="mt-4 w-full bg-deep-waters text-river-sand hover:bg-still-pool font-eyebrow text-xs uppercase tracking-[0.18em]">{billingLoading ? "Opening..." : "Open Receipts"}</Button>
-              {billingError && <p className="mt-3 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{billingError}</p>}
-            </div>
+            <BillingCard
+              profile={profile}
+              billingLoading={billingLoading}
+              billingError={billingError}
+              onOpenBillingPortal={openBillingPortal}
+            />
             <div className="rounded-2xl border border-border bg-background p-6">
               <div className="flex items-center gap-3 font-serif text-xl text-deep-waters"><BadgeCheck className="h-5 w-5 text-refined-gold" /> Founding member</div>
               <p className="mt-3 text-sm leading-relaxed text-deep-waters/75">The first 15 paid signups receive founding member status after Stripe confirms payment.</p>
